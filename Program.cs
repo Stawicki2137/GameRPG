@@ -12,7 +12,7 @@ internal class Program
     {
         Board board = new Board();
         Player player = new Player(board,new Point(1,1));
-        board.InitializeBoard();
+        board.StartGame();
         board.DrawBoard(player);
         bool running = true;
         while (running)

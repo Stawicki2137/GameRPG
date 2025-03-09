@@ -76,7 +76,7 @@ public abstract class Currency : Item
 
 public class Gold : Currency
 {
-    public Gold() : base("Gold", 8) { }
+    public Gold() : base("Gold", 8) { signifying = 'G'; }
 }
 public class Coin : Currency
 {
