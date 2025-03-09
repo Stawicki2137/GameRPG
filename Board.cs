@@ -12,6 +12,14 @@ public class Tile // kazde pole bedzie symbolizowane przez taki tile
     private char _symbol; // to co sie wyswietla 
     private List<Item> _items = new List<Item>(); // lista itemow na danym polu
    
+    public Item RemoveAtIndex(int index)
+    {
+
+        Item item = _items[index];
+        _items.RemoveAt(index);
+        return item;
+
+    }
     public void WriteItems()
     {
         int k = 1;
@@ -45,6 +53,8 @@ public class Tile // kazde pole bedzie symbolizowane przez taki tile
         else
         { return _symbol; }
     }
+    public int ItemCount => _items.Count;
+    
     public bool IsItem()
     {
         return _items.Count > 0;
@@ -75,9 +85,18 @@ public class Board
      * pozycje sie bedzie pamietac u niego i go wyswietlac wtedy jak najade na przedmiot wyswietlam playera ale moge brac normlanie
      * przemdioty co leza bez kombinacji 
      */
+    public int ItemCount(Point position)
+    {
+        return _tiles[position.X,position.Y].ItemCount;
+    }
     public bool IsItem(Point position)
     {
         return _tiles[position.X, position.Y].IsItem();
+    }
+    public Item RemoveAtIndex(Point position, int index)
+    {
+        return _tiles[position.X, position.Y].RemoveAtIndex(index);
+      
     }
     public Item Remove(Point position)
     {
@@ -102,6 +121,8 @@ public class Board
     public void DrawBoard(Player player)
     {
         Console.OutputEncoding = Encoding.UTF8;
+        Console.SetCursorPosition(0, 22);
+        Console.Write(new String(' ', 20));
         for (int i = 0; i < H; i++)
         {
             Console.SetCursorPosition(0, i);

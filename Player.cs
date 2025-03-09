@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,14 +48,14 @@ public class Player
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("---Equipment---");
         int k = 1;
-        for(int i = 1; i<12; i++)
+        for (int i = 1; i < 12; i++)
         {
             Console.SetCursorPosition(x, y + i);
             Console.Write(new String(' ', 50));
         }
         foreach (Item item in _equipment)
         {
-            
+
             Console.SetCursorPosition(x, y + k);
             Console.Write($"{k}." + item.Name);
             k++;
@@ -73,17 +74,40 @@ public class Player
     {
         if (_board.IsItem(Position))
         {
-            _equipment.Add(_board.Remove(Position));/*
-            
-            Console.SetCursorPosition(0, 22);
-            Console.Write("Item equipped"); */
+            if (_board.ItemCount(Position) == 1)
+            {
+                _equipment.Add(_board.Remove(Position));
+                return true;
+            }
+            else
+            {
+                Console.SetCursorPosition(0, 22);
+                Console.Write("Select item:");
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.D1:
+                        _equipment.Add(_board.RemoveAtIndex(Position,0));
+                       
 
-            return true;
+                        break;
+                    case ConsoleKey.D2:
+                        _equipment.Add(_board.RemoveAtIndex(Position, 1));
+                        break;
+                    case ConsoleKey.D3:
+                        _equipment.Add(_board.RemoveAtIndex(Position, 2));
+                        break;
+                    default:
+                        return false;
+
+                }
+                return true;
+
+
+            }
+
         }
-        /*
-        Console.SetCursorPosition(0, 22);
-        Console.Write("Nothing to equip!");*/
         return false;
+
     }
 }
 /*
