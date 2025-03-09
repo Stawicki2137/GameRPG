@@ -11,39 +11,32 @@ internal class Program
     static void Main()
     {
         Board board = new Board();
-        Player player = new Player("Player1",board);
-        board.Initialize();
-        board.UpdateBoard(player);
-
-        int exit = 1;
-        while (exit == 1)
+        Player player = new Player(board,new Point(1,1));
+        board.InitializeBoard();
+        board.DrawBoard(player);
+        bool running = true;
+        while (running)
         {
-            board.DrawBoard(player);
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.Q:
-                    exit = 0; break;
+                    running = false;
+                    break;
                 case ConsoleKey.W:
                     player.Move(-1, 0);
                     break;
                 case ConsoleKey.S:
                     player.Move(1, 0);
                     break;
-                case ConsoleKey.A:
-                    player.Move(0, -1);
-                    break;
                 case ConsoleKey.D:
                     player.Move(0, 1);
                     break;
-                case ConsoleKey.E:
-                    player.PickItem();
+                case ConsoleKey.A:
+                    player.Move(0, -1);
                     break;
 
             }
-
-            board.UpdateBoard(player);
-
-
         }
+       
     }
 }

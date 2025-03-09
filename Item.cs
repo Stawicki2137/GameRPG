@@ -11,7 +11,7 @@ public interface IItem
 }
 public abstract class Item : IItem
 {
-    public char signifying { get;protected set; }
+    public char signifying { get; protected set; }
     public string Name { get; protected set; }
     public bool NeedsTwoArms { get; protected set; }
     public Item(string name, bool needsTwoArms = false)
