@@ -75,6 +75,14 @@ public class Board
      * pozycje sie bedzie pamietac u niego i go wyswietlac wtedy jak najade na przedmiot wyswietlam playera ale moge brac normlanie
      * przemdioty co leza bez kombinacji 
      */
+    public bool IsItem(Point position)
+    {
+        return _tiles[position.X, position.Y].IsItem();
+    }
+    public Item Remove(Point position)
+    {
+        return _tiles[position.X, position.Y].Remove();
+    }
     public bool AddItem(Point position, Item item)
     {
         return _tiles[position.X, position.Y].AddItem(item);
@@ -117,19 +125,25 @@ public class Board
         {
             WriteBinds();
         }
+       /* Console.SetCursorPosition(0, 22);
+        Console.Write(new String(' ', 20)); */
+
 
         Console.SetCursorPosition(0, H + 3);
         {
-            Console.Write(new String(' ', W+3));
+            Console.Write(new String(' ', W + 3));
         }
         Console.SetCursorPosition(0, H + 3);
         if (_tiles[player.Position.X, player.Position.Y].IsItem())
         {
             _tiles[player.Position.X, player.Position.Y].WriteItems();
         }
-
+        Console.SetCursorPosition(W + 2, 0);
+        player.WriteEquipment(W + 2,0);
+        
 
     }
+
     public void StartGame()
     {
         InitializeBoard();

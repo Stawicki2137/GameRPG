@@ -11,12 +11,13 @@ internal class Program
     static void Main()
     {
         Board board = new Board();
-        Player player = new Player(board,new Point(1,1));
+        Player player = new Player(board, new Point(1, 1));
         board.StartGame();
         board.DrawBoard(player);
         bool running = true;
         while (running)
         {
+            Console.SetCursorPosition(0, 22);
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.Q:
@@ -34,9 +35,13 @@ internal class Program
                 case ConsoleKey.A:
                     player.Move(0, -1);
                     break;
+                case ConsoleKey.E:
+                    player.PickItem();
+                    board.DrawBoard(player);
+                    break;
 
             }
         }
-       
+
     }
 }

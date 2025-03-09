@@ -21,6 +21,7 @@ public class Player
     public Point Position;
     private Board _board;
     public char Sign = '¶';
+    private List<Item> _equipment = new List<Item>();
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position = default(Point))
     {
         Position = position;
@@ -28,12 +29,49 @@ public class Player
     }
     public void Move(int x, int y)
     {
-        Point newPosition = new Point(Position.X+x, Position.Y+y);
-        if(_board.IsLegalMove(newPosition))
+        Point newPosition = new Point(Position.X + x, Position.Y + y);
+        if (_board.IsLegalMove(newPosition))
         {
             Position = newPosition;
             _board.DrawBoard(this);
         }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x">horizontal cursor position</param>
+    /// <param name="y">vertical cursor postion</param>
+    public void WriteEquipment(int x, int y)
+    {
+        Console.SetCursorPosition(x, y);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("---Equipment---");
+        int k = 1;
+        foreach (Item item in _equipment)
+        {
+            Console.SetCursorPosition(x, y + k);
+            Console.Write(new String(' ', 40));
+            Console.SetCursorPosition(x, y + k);
+            Console.Write($"{k}." + item.Name);
+            k++;
+        }
+        Console.ResetColor();
+    }
+    public bool PickItem()
+    {
+        if (_board.IsItem(Position))
+        {
+            _equipment.Add(_board.Remove(Position));/*
+            
+            Console.SetCursorPosition(0, 22);
+            Console.Write("Item equipped"); */
+
+            return true;
+        }
+        /*
+        Console.SetCursorPosition(0, 22);
+        Console.Write("Nothing to equip!");*/
+        return false;
     }
 }
 /*
