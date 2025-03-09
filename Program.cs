@@ -39,6 +39,10 @@ internal class Program
                     player.PickItem();
                     board.DrawBoard(player);
                     break;
+                case ConsoleKey.T:
+                    player.DropItem();
+                    board.DrawBoard(player);
+                    break;
 
             }
         }

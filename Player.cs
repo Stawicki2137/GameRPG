@@ -47,15 +47,27 @@ public class Player
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("---Equipment---");
         int k = 1;
+        for(int i = 1; i<12; i++)
+        {
+            Console.SetCursorPosition(x, y + i);
+            Console.Write(new String(' ', 50));
+        }
         foreach (Item item in _equipment)
         {
-            Console.SetCursorPosition(x, y + k);
-            Console.Write(new String(' ', 40));
+            
             Console.SetCursorPosition(x, y + k);
             Console.Write($"{k}." + item.Name);
             k++;
         }
         Console.ResetColor();
+    }
+    public void DropItem()
+    {
+        if (_equipment.Count > 0)
+        {
+            _board.AddItem(Position, _equipment[0]);
+            _equipment.RemoveAt(0);
+        }
     }
     public bool PickItem()
     {

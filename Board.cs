@@ -97,7 +97,7 @@ public class Board
     }
     private void WriteBinds()
     {
-        Console.Write("Q-Quit  W-S-A-D - moves");
+        Console.Write("Q-Quit E-Equip T-DropItem W-S-A-D-moves");
     }
     public void DrawBoard(Player player)
     {
@@ -131,7 +131,7 @@ public class Board
 
         Console.SetCursorPosition(0, H + 3);
         {
-            Console.Write(new String(' ', W + 3));
+            Console.Write(new String(' ', 2*W ));
         }
         Console.SetCursorPosition(0, H + 3);
         if (_tiles[player.Position.X, player.Position.Y].IsItem())
