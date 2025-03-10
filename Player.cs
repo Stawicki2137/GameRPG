@@ -85,15 +85,32 @@ public class Player
     // TODO Items refactore
     // TODO write pocket
     // TODO currency shoud have special place (pocket for gold and coins not keep them in eq) 
+    public bool MoveItemFromHandToEq()
+    {
+        Console.SetCursorPosition(0, 22);
+        Console.Write("Select hand (R - Right, L - Left): ");
+
+        ref Item? hand = ref _rightHand;
+        switch (Console.ReadKey().Key)
+        {
+            case ConsoleKey.R:
+                hand = ref _rightHand;
+                if (hand == null) return false;
+                break;
+            case ConsoleKey.L:
+                hand = ref _leftHand;
+                if (hand == null) return false;
+                break;
+            default:
+                return false;
+        }
+        _equipment.Add(hand);
+        hand = null;
+        return true;
+    }
     public bool MoveItemFromEqToHand()
     {
-        /// TODO: 
-        /*
-         * 
-         * moving back item to equipment from hand   New function needed and new key handler
-         * handling with 2handed items
-         * 
-         */
+       
         Console.SetCursorPosition(0, 22);
         Console.Write("Select hand (R - Right, L - Left): ");
 

@@ -47,6 +47,10 @@ internal class Program
                     player.MoveItemFromEqToHand();
                     board.DrawBoard(player);
                     break;
+                case ConsoleKey.V:
+                    player.MoveItemFromHandToEq();
+                    board.DrawBoard(player);
+                    break;
 
             }
         }

@@ -116,7 +116,7 @@ public class Board
     }
     private void WriteBinds()
     {
-        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand W-S-A-D-moves");
+        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq W-S-A-D-moves");
     }
     public void DrawBoard(Player player)
     {
