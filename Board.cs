@@ -116,13 +116,13 @@ public class Board
     }
     private void WriteBinds()
     {
-        Console.Write("Q-Quit E-Equip T-DropItem W-S-A-D-moves");
+        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand W-S-A-D-moves");
     }
     public void DrawBoard(Player player)
     {
         Console.OutputEncoding = Encoding.UTF8;
         Console.SetCursorPosition(0, 22);
-        Console.Write(new String(' ', 20));
+        Console.Write(new String(' ', 40));
         for (int i = 0; i < H; i++)
         {
             Console.SetCursorPosition(0, i);
@@ -161,8 +161,7 @@ public class Board
         }
         Console.SetCursorPosition(W + 2, 0);
         player.WriteEquipment(W + 2,0);
-        
-
+        player.WriteHands(W+2,13);
     }
 
     public void StartGame()

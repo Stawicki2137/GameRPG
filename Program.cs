@@ -43,6 +43,10 @@ internal class Program
                     player.DropItem();
                     board.DrawBoard(player);
                     break;
+                case ConsoleKey.G:
+                    player.MoveItemFromEqToHand();
+                    board.DrawBoard(player);
+                    break;
 
             }
         }

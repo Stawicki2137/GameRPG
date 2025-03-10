@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
@@ -23,6 +24,9 @@ public class Player
     private Board _board;
     public char Sign = '¶';
     private List<Item> _equipment = new List<Item>();
+
+    private Item? _leftHand;
+    private Item? _rightHand;
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position = default(Point))
     {
         Position = position;
@@ -36,6 +40,22 @@ public class Player
             Position = newPosition;
             _board.DrawBoard(this);
         }
+    }
+ 
+    public void WriteHands(int x, int y)
+    {
+        Console.SetCursorPosition(x, y);
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.SetCursorPosition(x, y);
+        Console.Write(new String(' ', 60));
+        Console.SetCursorPosition(x, y);
+        Console.Write("Left Hand: " + (_leftHand == null ? "empty" : _leftHand.Name));
+        Console.SetCursorPosition(x, y+1);
+        Console.Write(new String(' ', 60));
+        Console.SetCursorPosition(x, y+1);
+        Console.Write("Right Hand: " + (_rightHand == null ? "empty" : _rightHand.Name));
+        Console.ResetColor();
+
     }
     /// <summary>
     /// 
@@ -62,6 +82,96 @@ public class Player
         }
         Console.ResetColor();
     }
+    // TODO Items refactore
+    // TODO write pocket
+    // TODO currency shoud have special place (pocket for gold and coins not keep them in eq) 
+    public bool MoveItemFromEqToHand()
+    {
+        /// TODO: 
+        /*
+         * 
+         * moving back item to equipment from hand   New function needed and new key handler
+         * handling with 2handed items
+         * 
+         */
+        Console.SetCursorPosition(0, 22);
+        Console.Write("Select hand (R - Right, L - Left): ");
+
+        ref Item? hand = ref _rightHand;
+
+        switch (Console.ReadKey().Key)
+        {
+            case ConsoleKey.R:
+                hand = ref _rightHand;
+                if(hand != null) return false;
+                break;
+            case ConsoleKey.L:
+                hand = ref _leftHand;
+                if (hand != null) return false;
+                break;
+            default:
+                return false; 
+        }
+        int count = _equipment.Count;
+        Console.SetCursorPosition(0, 22);
+        Console.Write(new String(' ', 40));
+        Console.SetCursorPosition(0, 22);
+        Console.Write("Select item to take:");
+        switch (Console.ReadKey().Key)
+        {
+            case ConsoleKey.D1:
+                if (count < 1) return false;
+                hand = _equipment[0];
+                _equipment.RemoveAt(0);
+                break;
+            case ConsoleKey.D2:
+                if (count < 2) return false;
+                hand = _equipment[1];
+                _equipment.RemoveAt(1);
+                break;
+            case ConsoleKey.D3:
+                if (count < 3) return false;
+                hand = _equipment[2];
+                _equipment.RemoveAt(2);
+                break;
+            case ConsoleKey.D4:
+                if (count < 4) return false;
+                hand = _equipment[3];
+                _equipment.RemoveAt(3);
+                break;
+            case ConsoleKey.D5:
+                if (count < 5) return false;
+                hand = _equipment[4];
+                _equipment.RemoveAt(4);
+                break;
+            case ConsoleKey.D6:
+                if (count < 6) return false;
+                hand = _equipment[5];
+                _equipment.RemoveAt(5);
+                break;
+            case ConsoleKey.D7:
+                if (count < 7) return false;
+                hand = _equipment[6];
+                _equipment.RemoveAt(6);
+                break;
+            case ConsoleKey.D8:
+                if (count < 8) return false;
+                hand = _equipment[7];
+                _equipment.RemoveAt(7);
+                break;
+            case ConsoleKey.D9:
+                if (count < 9) return false;
+                hand = _equipment[8];
+                _equipment.RemoveAt(8);
+                break;
+            default:
+                return false;
+        }
+        return true;
+
+
+    }
+
     public bool DropItem()
     {
         int count = _equipment.Count();
@@ -107,9 +217,9 @@ public class Player
                         _equipment.RemoveAt(4);
                         break;
                     case ConsoleKey.D6:
+                        if (count < 6) return false;
                         _board.AddItem(Position, _equipment[5]);
                         _equipment.RemoveAt(5);
-                        if (count < 6) return false;
                         break;
                     case ConsoleKey.D7:
                         if (count < 7) return false;
