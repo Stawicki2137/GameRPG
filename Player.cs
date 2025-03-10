@@ -62,49 +62,138 @@ public class Player
         }
         Console.ResetColor();
     }
-    public void DropItem()
+    public bool DropItem()
     {
-        if (_equipment.Count > 0)
+        int count = _equipment.Count();
+
+        if (count>0)
         {
-            _board.AddItem(Position, _equipment[0]);
-            _equipment.RemoveAt(0);
+            if (count == 1)
+            {
+                _board.AddItem(Position, _equipment[0]);
+                _equipment.RemoveAt(0);
+                return true;
+            }
+            else
+            {
+
+                Console.SetCursorPosition(0, 22);
+                Console.Write("Select item:");
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.D1:
+                        if (count < 1) return false;
+                        _board.AddItem(Position, _equipment[0]);
+                        _equipment.RemoveAt(0);
+                        break;
+                    case ConsoleKey.D2:
+                        if (count < 2) return false;
+                        _board.AddItem(Position, _equipment[1]);
+                        _equipment.RemoveAt(1);
+                        break;
+                    case ConsoleKey.D3:
+                        if (count < 3) return false;
+                        _board.AddItem(Position, _equipment[2]);
+                        _equipment.RemoveAt(2);
+                        break;
+                    case ConsoleKey.D4:
+                        if (count < 4) return false;
+                        _board.AddItem(Position, _equipment[3]);
+                        _equipment.RemoveAt(3);
+                        break;
+                    case ConsoleKey.D5:
+                        if (count < 5) return false;
+                        _board.AddItem(Position, _equipment[4]);
+                        _equipment.RemoveAt(4);
+                        break;
+                    case ConsoleKey.D6:
+                        _board.AddItem(Position, _equipment[5]);
+                        _equipment.RemoveAt(5);
+                        if (count < 6) return false;
+                        break;
+                    case ConsoleKey.D7:
+                        if (count < 7) return false;
+                        _board.AddItem(Position, _equipment[6]);
+                        _equipment.RemoveAt(6);
+                        break;
+                    case ConsoleKey.D8:
+                        if (count < 8) return false;
+                        _board.AddItem(Position, _equipment[7]);
+                        _equipment.RemoveAt(7);
+                        break;
+                    case ConsoleKey.D9:
+                        if (count < 9) return false;
+                        _board.AddItem(Position, _equipment[8]);
+                        _equipment.RemoveAt(8);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
         }
+        return false;
+
+        
     }
     public bool PickItem()
     {
         if (_board.IsItem(Position))
         {
-            if (_board.ItemCount(Position) == 1)
+            int count = _board.ItemCount(Position);
+            if (count== 1)
             {
                 _equipment.Add(_board.Remove(Position));
                 return true;
             }
             else
             {
+
                 Console.SetCursorPosition(0, 22);
                 Console.Write("Select item:");
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
+                        if (count < 1) return false;
                         _equipment.Add(_board.RemoveAtIndex(Position,0));
-                       
-
                         break;
                     case ConsoleKey.D2:
+                        if (count < 2) return false;
                         _equipment.Add(_board.RemoveAtIndex(Position, 1));
                         break;
                     case ConsoleKey.D3:
+                        if (count < 3) return false;
                         _equipment.Add(_board.RemoveAtIndex(Position, 2));
+                        break;
+                    case ConsoleKey.D4:
+                        if (count < 4) return false;
+                        _equipment.Add(_board.RemoveAtIndex(Position, 3));
+                        break;
+                    case ConsoleKey.D5:
+                        if (count < 5) return false;
+                        _equipment.Add(_board.RemoveAtIndex(Position, 4));
+                        break;
+                    case ConsoleKey.D6:
+                        _equipment.Add(_board.RemoveAtIndex(Position, 5));
+                        if (count < 6) return false;
+                        break;
+                    case ConsoleKey.D7:
+                        if (count < 7) return false;
+                        _equipment.Add(_board.RemoveAtIndex(Position, 6));
+                        break;
+                    case ConsoleKey.D8:
+                        if (count < 8) return false;
+                        _equipment.Add(_board.RemoveAtIndex(Position, 7));
+                        break;
+                    case ConsoleKey.D9:
+                        if (count < 9) return false;
+                        _equipment.Add(_board.RemoveAtIndex(Position, 8));
                         break;
                     default:
                         return false;
-
                 }
                 return true;
-
-
             }
-
         }
         return false;
 
