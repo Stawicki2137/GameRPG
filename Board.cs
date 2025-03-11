@@ -11,6 +11,7 @@ public class Tile // kazde pole bedzie symbolizowane przez taki tile
 {
     private char _symbol; // to co sie wyswietla 
     private List<Item> _items = new List<Item>(); // lista itemow na danym polu
+    // pomysl zeby das liste na currency 
    
     public Item RemoveAtIndex(int index)
     {
@@ -161,7 +162,9 @@ public class Board
         }
         Console.SetCursorPosition(W + 2, 0);
         player.WriteEquipment(W + 2,0);
+        player.WritePLayer(W + 2,13+3);
         player.WriteHands(W+2,13);
+
     }
 
     public void StartGame()
@@ -176,6 +179,9 @@ public class Board
         AddItem(new Point(3, 6), new Gold());
         AddItem(new Point(6, 4), new TwoHandedHeavySword());
         AddItem(new Point(6, 4), new Log());
+        AddItem(new Point(9,5), new Stone());
+        AddItem(new Point(7, 7), new HollowShield());
+
 
 
     }

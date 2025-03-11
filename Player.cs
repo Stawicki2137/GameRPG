@@ -27,11 +27,29 @@ public class Player
 
     private Item? _leftHand;
     private Item? _rightHand;
-    public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position = default(Point))
+    // player attr
+    private string _name;
+    private int _power;
+    private int _agility;
+    private int _health;
+    private int _luck;
+    private int _aggression;
+    private int _wisdom;
+    // end 
+    public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
+        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3)
     {
         Position = position;
         _board = board;
+        _name = name;
+
+        _power = power;
+        _agility = agility;
+        _health = health;
+        _luck = luck;
+        _wisdom = wisdom;
     }
+
     public void Move(int x, int y)
     {
         Point newPosition = new Point(Position.X + x, Position.Y + y);
@@ -41,7 +59,43 @@ public class Player
             _board.DrawBoard(this);
         }
     }
- 
+    
+    public void WritePLayer(int x, int y)
+    {
+        Console.SetCursorPosition(x, y);
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.SetCursorPosition(x, y);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y);
+        Console.Write("---" + _name + "---");
+
+        Console.SetCursorPosition(x, y+1);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 1);
+        Console.Write($"Health {_health}");
+        Console.SetCursorPosition(x, y + 2);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 2);
+        Console.Write($"Power {_power}");
+        Console.SetCursorPosition(x, y + 3);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 3);
+        Console.Write($"Luck {_luck}");
+        Console.SetCursorPosition(x, y + 4);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 4);
+        Console.Write($"Wisdom {_wisdom}");
+        Console.SetCursorPosition(x, y + 5);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 5);
+        Console.Write($"Agility {_agility}");
+
+        Console.ResetColor();
+        
+
+
+    }
+
     public void WriteHands(int x, int y)
     {
         Console.SetCursorPosition(x, y);
@@ -326,114 +380,3 @@ public class Player
 
     }
 }
-/*
-public struct Point
-{
-    public int X;
-    public int Y;
-    public Point(int x = 0, int y = 0)
-    {
-        X = x;
-        Y = y;
-    }
-}
-public class Player
-{
-    private string _playerName;
-    private int _strength;
-    private int _dexterity;
-    private int _health;
-    private int _luck;
-    private int _aggression;
-    private int _wisdom;
-
-    // private Item _leftHand;
-
-
-    private Board _board;
-    public Player(string name, Board board)
-    {
-        _playerName = name;
-        _board = board;
-    }
-    private Point _position = new Point(1, 1);
-    private Point _prevPos = new Point(1, 1);
-    public Point GetPosition => _position;
-    public Point GetPrevPosition => _prevPos;
-
-    public bool IsPlayerOnItem()
-    {
-        Console.SetCursorPosition(0, _board.GetH + 1);
-
-        if (_board.IsItem(_position))
-        {
-            foreach (var item in _board.GetItems(_position))
-            {
-                Console.Write(item.signifying + "-" + item.Name + " ");
-            }
-            return true;
-        }
-        else
-        {
-            Console.SetCursorPosition(0, _board.GetH + 1);
-            Console.Write("                                    ");
-            return false;
-        }
-
-    }
-    public void ThrowItemFromEq(int index)
-    {
-
-    }
-    private List<Item> _equipment = new List<Item>();
-    public void PrintEquipment()
-    {
-        Console.SetCursorPosition(_board.GetW, 0);
-        Console.WriteLine("Equipment");
-        int i = 1;
-        foreach (var item in _equipment)
-        {
-            Console.SetCursorPosition(_board.GetW, i);
-            Console.Write($"{i} - " + item.Name);
-            i++;
-        }
-    }
-    public void PickItem()
-    {
-        if (_isItem)
-        {
-            // if (_board.GetCountOfItems(_position) == 0)
-
-            var item = _board.GetItems(_position).First();
-            // TO DO wybor itemaska ktory podniose w przypadku jak lezy wiecej itemasow?
-            _equipment.Add(item);
-            _board.PickItem(_position, item);
-            Console.SetCursorPosition(0, _board.GetH);
-            Console.Write("Item picked up");
-        }
-        else
-        {
-            Console.SetCursorPosition(0, _board.GetH);
-            Console.Write("Nothing to pick up!");
-        }
-    }
-    private bool _isItem = false;
-    public void Move(int dx, int dy)
-    {
-        Point newPosition = new Point(_position.X + dx, _position.Y + dy);
-        if (!IsLegalMove(newPosition))
-            return;
-        _prevPos = _position;
-        _position.X += dx;
-        _position.Y += dy;
-        _isItem = IsPlayerOnItem();
-
-    }
-    private bool IsLegalMove(Point newPosition)
-    {
-        if (_board.IsLegalMove(newPosition))
-            return true;
-        return false;
-    }
-}
-*/

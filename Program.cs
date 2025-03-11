@@ -10,8 +10,9 @@ internal class Program
 {
     static void Main()
     {
+        Console.CursorVisible = false;
         Board board = new Board();
-        Player player = new Player(board, new Point(1, 1));
+        Player player = new Player(board,new Point(1, 1));
         board.StartGame();
         board.DrawBoard(player);
         bool running = true;
