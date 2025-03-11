@@ -169,11 +169,28 @@ public class Player
         {
             case ConsoleKey.R:
                 hand = ref _rightHand;
+                
                 if (hand == null) return false;
+                if (hand.NeedsTwoArms)
+                {
+                    _equipment.Add(hand);
+                    hand.RemoveModifiers(this);
+                    _leftHand = null;
+                    _rightHand = null;
+                    return true;
+                }
                 break;
             case ConsoleKey.L:
                 hand = ref _leftHand;
                 if (hand == null) return false;
+                if (hand.NeedsTwoArms)
+                {
+                    _equipment.Add(hand);
+                    hand.RemoveModifiers(this);
+                    _leftHand = null;
+                    _rightHand = null;
+                    return true;
+                }
                 break;
             default:
                 return false;
@@ -190,6 +207,9 @@ public class Player
         Console.Write("Select hand (R - Right, L - Left): ");
 
         ref Item? hand = ref _rightHand;
+        bool bothHandsEmpty = true;
+        if(_leftHand != null || _rightHand != null) // jesli ktoras jest nie pusta to obie nie sa puste
+            bothHandsEmpty = false;
 
         switch (Console.ReadKey().Key)
         {
@@ -213,6 +233,14 @@ public class Player
         {
             case ConsoleKey.D1:
                 if (count < 1) return false;
+                if (_equipment[0].NeedsTwoArms)
+                {
+                    if(!bothHandsEmpty) return false;
+                    _leftHand = _equipment[0];
+                    _rightHand = _equipment[0];
+                    _equipment.RemoveAt(0);
+                    return true;
+                }
                 hand = _equipment[0];
                 _equipment.RemoveAt(0);
                 break;
