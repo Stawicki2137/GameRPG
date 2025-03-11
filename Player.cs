@@ -37,7 +37,7 @@ public class Player
     private int _wisdom;
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
-        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3)
+        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3)
     {
         Position = position;
         _board = board;
@@ -48,8 +48,24 @@ public class Player
         _health = health;
         _luck = luck;
         _wisdom = wisdom;
+        _aggression = aggression;
     }
+    public void ChangeAll(int amount)
+    {
+        _power += amount;
+        _agility += amount;
+        _health += amount;
+        _luck += amount;
+        _aggression += amount;
+        _wisdom += amount;
 
+    }
+    public void ChangeAggression(int aggression) { _aggression += aggression; }
+    public void ChangeHealth(int health) { _health += health; }
+    public void ChangeAgility(int agility) { _agility += agility; }
+    public void ChangeLuck(int luck) { _luck += luck; }
+    public void ChangeWisdom(int wisdom) { _wisdom += wisdom; }
+    public void ChangePower(int power) { _power += power; }
     public void Move(int x, int y)
     {
         Point newPosition = new Point(Position.X + x, Position.Y + y);
@@ -103,11 +119,11 @@ public class Player
         Console.SetCursorPosition(x, y);
         Console.Write(new String(' ', 60));
         Console.SetCursorPosition(x, y);
-        Console.Write("Left Hand: " + (_leftHand == null ? "empty" : _leftHand.Name));
+        Console.Write("Left Hand: " + (_leftHand == null ? "empty" : _leftHand.GetName()));
         Console.SetCursorPosition(x, y+1);
         Console.Write(new String(' ', 60));
         Console.SetCursorPosition(x, y+1);
-        Console.Write("Right Hand: " + (_rightHand == null ? "empty" : _rightHand.Name));
+        Console.Write("Right Hand: " + (_rightHand == null ? "empty" : _rightHand.GetName()));
         Console.ResetColor();
 
     }
@@ -131,7 +147,7 @@ public class Player
         {
 
             Console.SetCursorPosition(x, y + k);
-            Console.Write($"{k}." + item.Name);
+            Console.Write($"{k}." + item.GetName());
             k++;
         }
         Console.ResetColor();
@@ -159,6 +175,7 @@ public class Player
                 return false;
         }
         _equipment.Add(hand);
+        hand.RemoveModifiers(this);
         hand = null;
         return true;
     }
@@ -238,6 +255,7 @@ public class Player
             default:
                 return false;
         }
+        hand.ApplyModifiers(this);
         return true;
 
 

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace GameRPG;
 
 public interface IItem
-{ 
-    
-
-
+{
+    string GetName();
+    void ApplyModifiers(Player player);
+    void RemoveModifiers(Player player);
 }
 public abstract class Item : IItem
 {
@@ -22,5 +22,11 @@ public abstract class Item : IItem
         Name = name;
         NeedsTwoArms = needsTwoArms;
     }
+    public virtual string GetName()
+    {
+        return Name;
+    }
+    public virtual void ApplyModifiers(Player player) { } 
+    public virtual void RemoveModifiers(Player player) { }
 
 }

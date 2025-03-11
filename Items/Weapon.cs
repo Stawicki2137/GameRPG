@@ -12,6 +12,7 @@ public abstract class Weapon : Item
     public int Damage { get; protected set; }
     protected Weapon(string name, bool needsTwoArms = false) : base(name, needsTwoArms)
     {
+        signifying = 'W';
     }
 }
 public abstract class Sword : Weapon
@@ -34,6 +35,7 @@ public class LightSword : Sword
     public LightSword() : base("Light Sword")
     {
         Damage += 2;
+        signifying = 'L';
     }
 }
 public class TwoHandedHeavySword : Sword

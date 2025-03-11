@@ -14,6 +14,7 @@ public abstract class Currency : Item
         : base(name, false)
     {
         Value = value;
+        signifying = 'C';
     }
 }
 
