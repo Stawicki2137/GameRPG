@@ -29,6 +29,13 @@ public class Dagger : Weapon
         Damage = 10;
     }
 }
+public class LightSword : Sword
+{
+    public LightSword() : base("Light Sword")
+    {
+        Damage += 2;
+    }
+}
 public class TwoHandedHeavySword : Sword
 {
     public TwoHandedHeavySword() : base("Two Handed Heavy Sword", true)

@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameRPG;
-public class Tile // kazde pole bedzie symbolizowane przez taki tile 
+public class Tile 
 {
-    private char _symbol; // to co sie wyswietla 
-    private List<Item> _items = new List<Item>(); // lista itemow na danym polu
-    // pomysl zeby das liste na currency 
+    private char _symbol; 
+    private List<Item> _items = new List<Item>();
+    // pomysl jeset  zeby das liste na currency i jak bede wchodzil graczem na tile na ktorym lista currency nie 
+    // jest pusta to moge podniesc do kiermany od razu
    
     public Item RemoveAtIndex(int index)
     {
@@ -80,12 +81,7 @@ public class Board
         _horizontalFrame = horizontalFrame;
         _verticalFrame = verticalFrame;
     }
-    /*
-     * plan jest taki:
-     * itemasy beda do tile wrzucane, ewnetualni przeciwnicy tez a player bedzie chodzil se jako char po prostu jego
-     * pozycje sie bedzie pamietac u niego i go wyswietlac wtedy jak najade na przedmiot wyswietlam playera ale moge brac normlanie
-     * przemdioty co leza bez kombinacji 
-     */
+
     public int ItemCount(Point position)
     {
         return _tiles[position.X,position.Y].ItemCount;
@@ -181,9 +177,7 @@ public class Board
         AddItem(new Point(6, 4), new Log());
         AddItem(new Point(9,5), new Stone());
         AddItem(new Point(7, 7), new HollowShield());
-
-
-
+        AddItem(new Point(10,10), new LightSword());
     }
     private void InitializeBoard()
     {
