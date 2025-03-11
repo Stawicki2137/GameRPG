@@ -78,6 +78,7 @@ public class Player
     
     public void WritePLayer(int x, int y)
     {
+        y = y - 1;
         Console.SetCursorPosition(x, y);
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.SetCursorPosition(x, y);
@@ -105,7 +106,10 @@ public class Player
         Console.Write(new String(' ', 30));
         Console.SetCursorPosition(x, y + 5);
         Console.Write($"Agility {_agility}");
-
+        Console.SetCursorPosition(x, y + 6);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 6);
+        Console.Write($"Aggression {_aggression}");
         Console.ResetColor();
         
 
