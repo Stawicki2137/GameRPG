@@ -172,12 +172,14 @@ public class Board
     {
         AddItem(new Point(3, 3), new Coin());
         AddItem(new Point(5, 2), new Dagger());
+        AddItem(new Point(5, 2), new LuckyDecorator(new Log()));
+
 
         AddItem(new Point(5, 2), new Damned(new Dagger()));
         AddItem(new Point(3, 6), new Gold());
         AddItem(new Point(6, 4), new TwoHandedHeavySword());
         AddItem(new Point(6, 4), new Log());
-        AddItem(new Point(9, 5), new Stone());
+        AddItem(new Point(9, 5), new LuckyDecorator( new HolyDecorator(new Stone())));
         AddItem(new Point(7, 7), new HollowShield());
         AddItem(new Point(10, 10), new LightSword());
         AddItem(new Point(5, 5), new LightSword());
@@ -201,7 +203,7 @@ public class Board
                 }
                 else
                 {
-                    if (random.Next() % 6 == 0)
+                    if (random.Next() % 8 == 0)
                     {
                         _tiles[i, j] = new Tile('█');
                     }

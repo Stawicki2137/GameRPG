@@ -20,7 +20,12 @@ namespace GameRPG;
 // kosmetyczne rzeczy: limit rzeczy w eq 
 // poprawic generowanie (moze dac generowanie przedmiotow)
 
+/*
+public abstract class WeaponEffectDecorator : EffectDecorator
+{
 
+}
+*/
 public abstract class EffectDecorator : Item
 {
     protected Item _item;
@@ -45,6 +50,7 @@ public abstract class EffectDecorator : Item
         _item.RemoveModifiers(player);
     }
 }
+
 public class Damned : EffectDecorator
 {
     public Damned(Item item) : base(item) { }

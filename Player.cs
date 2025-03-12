@@ -156,7 +156,6 @@ public class Player
         }
         Console.ResetColor();
     }
-    // TODO Items refactore
     // TODO write pocket
     // TODO currency shoud have special place (pocket for gold and coins not keep them in eq) 
     public bool MoveItemFromHandToEq()
