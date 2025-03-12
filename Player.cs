@@ -35,9 +35,11 @@ public class Player
     private int _luck;
     private int _aggression;
     private int _wisdom;
+    private int _eqCapacity;
+
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
-        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3)
+        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 7)
     {
         Position = position;
         _board = board;
@@ -49,6 +51,7 @@ public class Player
         _luck = luck;
         _wisdom = wisdom;
         _aggression = aggression;
+        _eqCapacity = eqCapacity;
     }
     public void ChangeAll(int amount)
     {
@@ -172,6 +175,8 @@ public class Player
                 if (hand == null) return false;
                 if (hand.NeedsTwoArms)
                 {
+                    if(_equipment.Count>=_eqCapacity) return false; // eq limit cap
+                    ;
                     _equipment.Add(hand);
                     hand.RemoveModifiers(this);
                     _leftHand = null;
@@ -184,6 +189,7 @@ public class Player
                 if (hand == null) return false;
                 if (hand.NeedsTwoArms)
                 {
+                    if (_equipment.Count >= _eqCapacity) return false; // eq limit cap
                     _equipment.Add(hand);
                     hand.RemoveModifiers(this);
                     _leftHand = null;
@@ -194,6 +200,7 @@ public class Player
             default:
                 return false;
         }
+        if (_equipment.Count >= _eqCapacity) return false; // eq limit cap
         _equipment.Add(hand);
         hand.RemoveModifiers(this);
         hand = null;
@@ -370,6 +377,8 @@ public class Player
     {
         if (_board.IsItem(Position))
         {
+            
+            if (_equipment.Count >= _eqCapacity) return false; // limit eq capacity
             int count = _board.ItemCount(Position);
             if (count== 1)
             {
