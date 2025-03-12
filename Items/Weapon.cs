@@ -8,14 +8,26 @@ namespace GameRPG;
 
 public interface IWeapon
 {
-    int GetDamage();
+  //  int GetDamage();
+    void ApplyModifiersOnWeapon(int x);
+    void RemoveModifiersOnWeapon(int x);
 }
-public abstract class Weapon : Item 
+public abstract class Weapon : Item , IWeapon
 {
     public int Damage { get; protected set; }
     protected Weapon(string name, bool needsTwoArms = false) : base(name, needsTwoArms)
     {
         signifying = 'W';
+    }
+
+    public void ApplyModifiersOnWeapon(int x)
+    {
+        Damage += x;
+    }
+
+    public void RemoveModifiersOnWeapon(int x)
+    {
+        Damage -= x;
     }
 }
 public abstract class Sword : Weapon

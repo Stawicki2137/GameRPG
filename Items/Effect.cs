@@ -6,12 +6,54 @@ using System.Threading.Tasks;
 
 namespace GameRPG;
 
-/*
-public abstract class WeaponEffectDecorator : EffectDecorator
+
+public abstract class WeaponEffectDecorator : Item
 {
+    protected Item _item;
+    public WeaponEffectDecorator(Item item): base(item.Name, item.NeedsTwoArms)
+    {
+        _item = item;
+    }
+    public override char GetSign()
+    {
+        return _item.GetSign();
+    }
+    public override string GetName()
+    {
+        return $"{_item.GetName()} ({this.GetType().Name.Replace("Decorator", "")})";
+    }
+    public void ApplyModifiersOnWeapon(int x) { }
+    public void RemoveModifiersOnWeapon(int x) { }
+
+    public override void ApplyModifiers(Player player)
+    {
+        _item.ApplyModifiers(player);
+    }
+
+    public override void RemoveModifiers(Player player)
+    {
+        _item.RemoveModifiers(player);
+    }
 
 }
-*/
+public class UltraStrong : WeaponEffectDecorator
+{
+    public UltraStrong(Item item) : base(item) { }
+    public override void ApplyModifiers(Player player)
+    {
+        base.ApplyModifiers(player);
+        player.ChangeAggression(3);
+        ApplyModifiersOnWeapon(5);
+    }
+    public override void RemoveModifiers(Player player)
+    {
+        base.RemoveModifiers(player);
+        player.ChangeAggression(-3);
+        RemoveModifiersOnWeapon(5);
+
+    }
+}
+
 public abstract class EffectDecorator : Item
 {
     protected Item _item;
