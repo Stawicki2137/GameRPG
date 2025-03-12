@@ -10,7 +10,7 @@ public interface IWeapon
 {
     int GetDamage();
 }
-public abstract class Weapon : Item //to weapon ma nie implementowac IItem? 
+public abstract class Weapon : Item 
 {
     public int Damage { get; protected set; }
     protected Weapon(string name, bool needsTwoArms = false) : base(name, needsTwoArms)

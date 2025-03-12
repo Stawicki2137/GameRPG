@@ -177,6 +177,7 @@ public class Board
 
         AddItem(new Point(5, 2), new Damned(new Dagger()));
         AddItem(new Point(3, 6), new Gold());
+        AddItem(new Point(6, 5), new TwoHandedHeavySword());
         AddItem(new Point(6, 4), new TwoHandedHeavySword());
         AddItem(new Point(6, 4), new Log());
         AddItem(new Point(9, 5), new LuckyDecorator( new HolyDecorator(new Stone())));

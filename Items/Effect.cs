@@ -6,20 +6,6 @@ using System.Threading.Tasks;
 
 namespace GameRPG;
 
-/// <summary>
-///  Zapytac Szymona o to koniecznie!
-/// </summary>
-//public abstract class EffectOnWeaponDecorator : Item {}
-
-  // kurde nw 
-  // pytanie na konsultacje:
-// dekoratory do broni jak ogarnac??
-// spytac czy coin i gold ogolnie currency moge trzymac na osobnej liscie jakby w tile albo rozpoznawac typ przy podnoszeniu
-// tzn miec metode isCurrency ?
-
-// kosmetyczne rzeczy: limit rzeczy w eq 
-// poprawic generowanie (moze dac generowanie przedmiotow)
-
 /*
 public abstract class WeaponEffectDecorator : EffectDecorator
 {

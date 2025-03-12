@@ -159,8 +159,7 @@ public class Player
         }
         Console.ResetColor();
     }
-    // TODO write pocket
-    // TODO currency shoud have special place (pocket for gold and coins not keep them in eq) 
+    
     public bool MoveItemFromHandToEq()
     {
         Console.SetCursorPosition(0, 22);
@@ -235,6 +234,7 @@ public class Player
         Console.Write(new String(' ', 40));
         Console.SetCursorPosition(0, 22);
         Console.Write("Select item to take:");
+
         switch (Console.ReadKey().Key)
         {
             case ConsoleKey.D1:
@@ -252,41 +252,105 @@ public class Player
                 break;
             case ConsoleKey.D2:
                 if (count < 2) return false;
+                if (_equipment[1].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[1];
+                    _rightHand = _equipment[1];
+                    _equipment.RemoveAt(1);
+                    return true;
+                }
                 hand = _equipment[1];
                 _equipment.RemoveAt(1);
                 break;
             case ConsoleKey.D3:
                 if (count < 3) return false;
+                if (_equipment[2].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[2];
+                    _rightHand = _equipment[2];
+                    _equipment.RemoveAt(2);
+                    return true;
+                }
                 hand = _equipment[2];
                 _equipment.RemoveAt(2);
                 break;
             case ConsoleKey.D4:
                 if (count < 4) return false;
+                if (_equipment[3].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[3];
+                    _rightHand = _equipment[3];
+                    _equipment.RemoveAt(3);
+                    return true;
+                }
                 hand = _equipment[3];
                 _equipment.RemoveAt(3);
                 break;
             case ConsoleKey.D5:
                 if (count < 5) return false;
+                if (_equipment[4].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[4];
+                    _rightHand = _equipment[4];
+                    _equipment.RemoveAt(4);
+                    return true;
+                }
                 hand = _equipment[4];
                 _equipment.RemoveAt(4);
                 break;
             case ConsoleKey.D6:
                 if (count < 6) return false;
+                if (_equipment[5].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[5];
+                    _rightHand = _equipment[5];
+                    _equipment.RemoveAt(5);
+                    return true;
+                }
                 hand = _equipment[5];
                 _equipment.RemoveAt(5);
                 break;
             case ConsoleKey.D7:
                 if (count < 7) return false;
+                if (_equipment[6].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[6];
+                    _rightHand = _equipment[6];
+                    _equipment.RemoveAt(6);
+                    return true;
+                }
                 hand = _equipment[6];
                 _equipment.RemoveAt(6);
                 break;
             case ConsoleKey.D8:
                 if (count < 8) return false;
+                if (_equipment[7].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[7];
+                    _rightHand = _equipment[7];
+                    _equipment.RemoveAt(7);
+                    return true;
+                }
                 hand = _equipment[7];
                 _equipment.RemoveAt(7);
                 break;
             case ConsoleKey.D9:
                 if (count < 9) return false;
+                if (_equipment[8].NeedsTwoArms)
+                {
+                    if (!bothHandsEmpty) return false;
+                    _leftHand = _equipment[8];
+                    _rightHand = _equipment[8];
+                    _equipment.RemoveAt(8);
+                    return true;
+                }
                 hand = _equipment[8];
                 _equipment.RemoveAt(8);
                 break;
