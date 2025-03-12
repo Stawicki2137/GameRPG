@@ -23,7 +23,7 @@ public class Player
     public Point Position;
     private Board _board;
     public char Sign = '¶';
-    private List<Item> _equipment = new List<Item>();
+    public List<Item> _equipment = new List<Item>();
 
     private Item? _leftHand;
     private Item? _rightHand;
@@ -36,6 +36,11 @@ public class Player
     private int _aggression;
     private int _wisdom;
     private int _eqCapacity;
+
+    private int _coinNumber = 0;
+    private int _goldNumber = 0;
+    public void ChangeGold(int amount) => _goldNumber += amount;
+    public void ChangeCoin(int amount) => _coinNumber += amount;
 
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
@@ -83,11 +88,21 @@ public class Player
     {
         y = y - 1;
         Console.SetCursorPosition(x, y);
-        Console.ForegroundColor = ConsoleColor.Gray;
         Console.SetCursorPosition(x, y);
         Console.Write(new String(' ', 30));
         Console.SetCursorPosition(x, y);
         Console.Write("---" + _name + "---");
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.SetCursorPosition(x+32, y+1);
+        Console.Write(new String(' ', 20));
+        Console.SetCursorPosition(x+32, y+1);
+        Console.Write($"Coins: {_coinNumber}");
+        Console.SetCursorPosition(x + 32, y + 2);
+        Console.Write(new String(' ', 20));
+        Console.SetCursorPosition(x + 32, y + 2);
+        Console.Write($"Gold: {_goldNumber}");
+        Console.ResetColor();
 
         Console.SetCursorPosition(x, y+1);
         Console.Write(new String(' ', 30));
@@ -446,7 +461,7 @@ public class Player
             int count = _board.ItemCount(Position);
             if (count== 1)
             {
-                _equipment.Add(_board.Remove(Position));
+                _board.Remove(Position).OnPickUp(this);
                 return true;
             }
             else
@@ -458,39 +473,39 @@ public class Player
                 {
                     case ConsoleKey.D1:
                         if (count < 1) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position,0));
+                        _board.RemoveAtIndex(Position, 0).OnPickUp(this);
                         break;
                     case ConsoleKey.D2:
                         if (count < 2) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 1));
+                        _board.RemoveAtIndex(Position, 1).OnPickUp(this);
                         break;
                     case ConsoleKey.D3:
                         if (count < 3) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 2));
+                        _board.RemoveAtIndex(Position, 2).OnPickUp(this);
                         break;
                     case ConsoleKey.D4:
                         if (count < 4) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 3));
+                        _board.RemoveAtIndex(Position, 3).OnPickUp(this);
                         break;
                     case ConsoleKey.D5:
                         if (count < 5) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 4));
+                        _board.RemoveAtIndex(Position, 4).OnPickUp(this);
                         break;
                     case ConsoleKey.D6:
-                        _equipment.Add(_board.RemoveAtIndex(Position, 5));
+                        _board.RemoveAtIndex(Position, 5).OnPickUp(this);
                         if (count < 6) return false;
                         break;
                     case ConsoleKey.D7:
                         if (count < 7) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 6));
+                        _board.RemoveAtIndex(Position, 6).OnPickUp(this);
                         break;
                     case ConsoleKey.D8:
                         if (count < 8) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 7));
+                        _board.RemoveAtIndex(Position, 7).OnPickUp(this);
                         break;
                     case ConsoleKey.D9:
                         if (count < 9) return false;
-                        _equipment.Add(_board.RemoveAtIndex(Position, 8));
+                        _board.RemoveAtIndex(Position, 8).OnPickUp(this);
                         break;
                     default:
                         return false;

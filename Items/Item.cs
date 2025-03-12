@@ -8,6 +8,7 @@ namespace GameRPG;
 // TODO OnItem i wtedy dla waluty zrobic ze sie inkrementuje kiermana xd a dla reszty normalnie leci do eq 
 public interface IItem
 {
+    void OnPickUp(Player player);
     string GetName();
     char GetSign();
     void ApplyModifiers(Player player);
@@ -32,4 +33,9 @@ public abstract class Item : IItem
     public virtual void ApplyModifiers(Player player) { } 
     public virtual void RemoveModifiers(Player player) { }
 
+    public virtual void OnPickUp(Player player)
+    { 
+        player._equipment.Add(this);
+    }
+    
 }

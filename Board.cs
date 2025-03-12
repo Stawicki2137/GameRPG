@@ -173,6 +173,19 @@ public class Board
         AddItem(new Point(3, 3), new Coin());
         AddItem(new Point(5, 2), new Dagger());
         AddItem(new Point(5, 2), new LuckyDecorator(new Log()));
+        for(int i = 1; i<=H-2; i++)
+        {
+            if (Random.Shared.NextDouble() < 0.5)
+            {
+                AddItem(new Point(i, 3), new Coin());
+            }
+            if(Random.Shared.NextDouble() > 0.7)
+            {
+                AddItem(new Point(i, 5), new Gold());
+
+            }
+
+        }
 
         AddItem(new Point(15, 30), new LuckyDecorator(new UltraStrong(new LightSword())));
 

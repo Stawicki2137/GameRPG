@@ -16,13 +16,22 @@ public abstract class Currency : Item
         Value = value;
         signifying = 'C';
     }
+   
 }
 
 public class Gold : Currency
 {
     public Gold() : base("Gold", 8) { signifying = 'G'; }
+    public override void OnPickUp(Player player)
+    {
+        player.ChangeGold(1);
+    }
 }
 public class Coin : Currency
 {
     public Coin() : base("Coin", 1) { signifying = 'C'; }
+    public override void OnPickUp(Player player)
+    {
+        player.ChangeCoin(1);
+    }
 }
