@@ -8,7 +8,7 @@ namespace GameRPG;
 
 public interface IWeapon
 {
-  //  int GetDamage();
+    //int GetDamage();
     void ApplyModifiersOnWeapon(int x);
     void RemoveModifiersOnWeapon(int x);
 }
