@@ -34,7 +34,10 @@ public abstract class EffectDecorator : Item
     {
         _item = item;
     }
-
+    public override char GetSign()
+    {
+        return _item.GetSign();
+    }
     public override string GetName()
     {
         return $"{_item.GetName()} ({this.GetType().Name.Replace("Decorator", "")})";
@@ -100,6 +103,7 @@ public class HolyDecorator : EffectDecorator
 public class LuckyDecorator : EffectDecorator
 {
     public LuckyDecorator(Item item) : base(item) { }
+
     public override void ApplyModifiers(Player player)
     {
         base.ApplyModifiers(player);

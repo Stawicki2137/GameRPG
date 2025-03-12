@@ -23,6 +23,7 @@ public class Stone : UselessItem
     {
         signifying = 'S';
     }
+    public override char GetSign() => signifying;
 }
 public class Log : UselessItem
 {

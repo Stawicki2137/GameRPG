@@ -50,7 +50,7 @@ public class Tile
     {
         if (IsItem())
         {
-            return _items.First().signifying;
+            return _items.First().GetSign();
         }
         else
         { return _symbol; }
@@ -185,6 +185,8 @@ public class Board
         AddItem(new Point(5, 5), new LightSword());
         AddItem(new Point(3, 3), new Strong(new HolyDecorator(new HollowShield())));
         AddItem(new Point(10, 10), new LuckyDecorator((new LightSword())));
+        AddItem(new Point(2,2), new Log());
+        AddItem(new Point(2,2), new Strong(new LuckyDecorator(new HolyDecorator(new Dagger()))));
     }
     private void InitializeBoard()
     {
