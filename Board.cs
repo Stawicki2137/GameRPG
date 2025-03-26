@@ -137,7 +137,7 @@ public class Board
             return false;
         return true;
     }
-    private void WriteBinds()
+    public void WriteBinds()
     {
         Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq W-S-A-D-moves");
     }

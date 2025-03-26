@@ -80,7 +80,8 @@ public class Player
         if (_board.IsLegalMove(newPosition))
         {
             Position = newPosition;
-            _board.DrawBoard(this);
+            DisplayManager.GetInstance().DisplayGameState(_board, this);
+
         }
     }
     

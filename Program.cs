@@ -14,7 +14,7 @@ internal class Program
         Board board = new Board();
         Player player = new Player(board,new Point(1, 1));
         board.StartGame();
-        board.DrawBoard(player);
+        DisplayManager.GetInstance().DisplayGameState(board, player);
         bool running = true;
         while (running)
         {
@@ -38,19 +38,19 @@ internal class Program
                     break;
                 case ConsoleKey.E:
                     player.PickItem();
-                    board.DrawBoard(player);
+                    DisplayManager.GetInstance().DisplayGameState(board, player);
                     break;
                 case ConsoleKey.T:
                     player.DropItem();
-                    board.DrawBoard(player);
+                    DisplayManager.GetInstance().DisplayGameState(board, player);
                     break;
                 case ConsoleKey.G:
                     player.MoveItemFromEqToHand();
-                    board.DrawBoard(player);
+                    DisplayManager.GetInstance().DisplayGameState(board, player);
                     break;
                 case ConsoleKey.V:
                     player.MoveItemFromHandToEq();
-                    board.DrawBoard(player);
+                    DisplayManager.GetInstance().DisplayGameState(board, player);
                     break;
 
             }
