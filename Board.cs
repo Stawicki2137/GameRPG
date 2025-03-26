@@ -12,6 +12,7 @@ public class Tile
 {
     public char _symbol;
     private List<Item> _items = new List<Item>();
+    private IEnemy? _enemy = null;
     public Item RemoveAtIndex(int index)
     {
 
@@ -28,6 +29,15 @@ public class Tile
             Console.Write($"{k}." + item.GetName() + " ");
             k++;
         }
+    }
+    public bool AddEnemy(IEnemy enemy)
+    {
+        if(_enemy == null)
+        {
+            _enemy = enemy;
+            return true;
+        }
+        return false;
     }
     public Item Remove()
     {
@@ -48,7 +58,15 @@ public class Tile
     {
         if (IsItem())
         {
+            if(_enemy == null)
             return _items.First().GetSign();
+            else 
+            return _enemy.GetSign();
+        }
+        else if (_enemy != null)
+        {
+            return _enemy.GetSign();
+
         }
         else
         { return _symbol; }
@@ -184,6 +202,7 @@ public class Board
         director.AddCentralRoom();
         director.AddRandomPaths();
         director.AddChamber();
+        director.GenerateEnemies();
         /*
         director.GenerateItems();
         director.GenerateModifiedItems();

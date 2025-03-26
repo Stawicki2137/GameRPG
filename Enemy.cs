@@ -31,3 +31,15 @@ public class Enemy : IEnemy
        return _sign;
     }
 }
+public class Goblin : Enemy
+{
+    public Goblin(string name = "Goblin", char sign = 'G') : base(name, sign)
+    {
+    }
+}
+public class Ork : Enemy
+{
+    public Ork(string name = "Ork", char sign = 'O') : base(name, sign)
+    {
+    }
+}

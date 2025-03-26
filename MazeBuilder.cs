@@ -21,6 +21,7 @@ public interface IMazeBuilder
     void GenerateModifiedWeapons(int amount);
     void GenerateCurrencies(int amount);
     void GenerateElixirs(int amount);
+    void GenerateEnemies(int amount);
     Board GetBoard();
 }
 
@@ -428,6 +429,38 @@ public class DefaultMazeBuilder : IMazeBuilder
 
         }
     }
+    public void GenerateEnemies(int amount)
+    {
+
+        int Xend = _board.GetW;
+        int Yend = _board.GetH;
+        int i = 0;
+        while (i < amount)
+        {
+            int x = _rand.Next(1, Xend - 1);
+            int y = _rand.Next(1, Yend - 1);
+            int rand = _rand.Next();
+            if (_board._tiles[y, x]._symbol == ' ')
+            {
+                if (rand % 2 == 0)
+                {
+
+                    if (_board._tiles[y, x].AddEnemy(new Goblin()))
+                        i++;
+
+                }
+                else
+                {
+                    if (_board._tiles[y, x].AddEnemy(new Ork()))
+                        i++;
+
+                }
+
+            }
+
+
+        }
+    }
 }
 public class Director
 {
@@ -448,6 +481,12 @@ public class Director
         if (!_startDone)
             throw new InvalidOperationException("At the begining use starting procedure");
         _builder.GenerateElixirs(amount);
+    }
+    public void GenerateEnemies(int amount = 5)
+    {
+        if (!_startDone)
+            throw new InvalidOperationException("At the begining use starting procedure");
+        _builder.GenerateEnemies(amount);
     }
     public void AddRandomPaths()
     {
@@ -481,26 +520,26 @@ public class Director
             throw new InvalidOperationException("At the begining use starting procedure");
         _builder.GenerateModifiedItems(amount);
     }
-    public void GenerateModifiedWeapons(int amount=10)
+    public void GenerateModifiedWeapons(int amount = 10)
     {
         if (!_startDone)
             throw new InvalidOperationException("At the begining use starting procedure");
         _builder.GenerateModifiedWeapons(amount);
     }
-    public void GenerateWeapons(int amount=10)
+    public void GenerateWeapons(int amount = 10)
     {
         if (!_startDone)
             throw new InvalidOperationException("At the begining use starting procedure");
         _builder.GenerateWeapons(amount);
     }
-    public void GenerateCurrencies(int amount=30)
+    public void GenerateCurrencies(int amount = 30)
     {
         if (!_startDone)
             throw new InvalidOperationException("At the begining use starting procedure");
         _builder.GenerateCurrencies(amount);
     }
 
-   
+
     public void AddChamber()
     {
         if (!_startDone)
