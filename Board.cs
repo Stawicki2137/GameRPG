@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameRPG;
+
 public class Tile
 {
-    private char _symbol;
+    public char _symbol;
     private List<Item> _items = new List<Item>();
     public Item RemoveAtIndex(int index)
     {
@@ -67,9 +68,11 @@ public class Board
 {
     private readonly int H;
     private readonly int W;
-    private Tile[,] _tiles; 
+    public Tile[,] _tiles; 
     private char _horizontalFrame;
-    private char _verticalFrame;
+    private char _verticalFrame;    
+    public int GetH => H;
+    public int GetW => W;
     public Board(int height = 20, int width = 40, char horizontalFrame = '-', char verticalFrame = '|')
     {
         H = height + 2; //+2 for frames
@@ -77,6 +80,14 @@ public class Board
         _tiles = new Tile[H, W];
         _horizontalFrame = horizontalFrame;
         _verticalFrame = verticalFrame;
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+            {
+                // Na start ustaw jakiś znak (np. spację)
+                _tiles[i, j] = new Tile(' ');
+            }
+        }
     }
 
     public int ItemCount(Point position)
@@ -143,7 +154,6 @@ public class Board
         /* Console.SetCursorPosition(0, 22);
          Console.Write(new String(' ', 20)); */
 
-
         Console.SetCursorPosition(0, H + 3);
         {
             Console.Write(new String(' ', 2 * W));
@@ -163,85 +173,28 @@ public class Board
     public void StartGame()
     {
         InitializeBoard();
-        GenerateItems();
     }
-    private void GenerateItems()
-    {
-        AddItem(new Point(3, 3), new Coin());
-        AddItem(new Point(5, 2), new Dagger());
-        AddItem(new Point(5, 2), new LuckyDecorator(new Log()));
-        for(int i = 1; i<=H-2; i++)
-        {
-            if (Random.Shared.NextDouble() < 0.5)
-            {
-                AddItem(new Point(i, 3), new Coin());
-            }
-            if(Random.Shared.NextDouble() > 0.7)
-            {
-                AddItem(new Point(i, 5), new Gold());
-
-            }
-
-        }
-        for (int i = 1; i <= H - 2; i++)
-        {
-            if (Random.Shared.NextDouble() < 0.5)
-            {
-                AddItem(new Point(i, 6), new Coin());
-            }
-            if (Random.Shared.NextDouble() > 0.7)
-            {
-                AddItem(new Point(i, 6), new Gold());
-
-            }
-
-        }
-
-        AddItem(new Point(15, 30), new LuckyDecorator(new UltraStrong(new LightSword())));
-
-        AddItem(new Point(15, 12), new Damned(new Dagger()));
-        AddItem(new Point(13, 16), new Gold());
-        AddItem(new Point(16, 15), new TwoHandedHeavySword());
-        AddItem(new Point(16, 14), new TwoHandedHeavySword());
-        AddItem(new Point(16, 4), new Log());
-        AddItem(new Point(19, 15), new LuckyDecorator( new HolyDecorator(new Stone())));
-        AddItem(new Point(7, 7), new HollowShield());
-        AddItem(new Point(10, 10), new LightSword());
-        AddItem(new Point(15, 5), new LightSword());
-        AddItem(new Point(3, 13), new Strong(new HolyDecorator(new HollowShield())));
-        AddItem(new Point(10, 10), new LuckyDecorator((new LightSword())));
-        AddItem(new Point(2,12), new Log());
-        AddItem(new Point(12,2), new Strong(new LuckyDecorator(new HolyDecorator(new Dagger()))));
-    }
+  
     private void InitializeBoard()
     {
-        Random random = new Random();
-        for (int i = 0; i < H; i++)
-        {
-            for (int j = 0; j < W; j++)
-            {
-                if (i == 0 || i == H - 1)
-                {
-                    _tiles[i, j] = new Tile(_horizontalFrame);
-                }
-                else if (j == 0 || j == W - 1)
-                {
-                    _tiles[i, j] = new Tile(_verticalFrame);
-                }
-                else
-                {
-                    if (random.Next() % 8 == 0)
-                    {
-                        _tiles[i, j] = new Tile('█');
-                    }
-                    else
-                    {
-                        _tiles[i, j] = new Tile(' ');
-                    }
-                }
+        var builder = new DefaultMazeBuilder();
+        var director = new Director(builder);
+        director.BuildFilledDungegon();
+        //director.BuildEmptyDungegon();
+        director.AddCentralRoom();
+        director.AddRandomPaths();
+        director.AddChamber();
+        /*
+        director.GenerateItems();
+        director.GenerateModifiedItems();
+        director.GenerateModifiedWeapons();
+        director.GenerateCurrencies();
+        director.GenerateWeapons();
+        */
+        director.GenerateElixirs();
+        Board builtBoard = director.GetBoard();
+        this._tiles = builtBoard._tiles;
 
-            }
-        }
     }
 
 }
