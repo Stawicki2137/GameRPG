@@ -52,6 +52,10 @@ internal class Program
                     player.MoveItemFromHandToEq();
                     DisplayManager.GetInstance().DisplayGameState(board, player);
                     break;
+                case ConsoleKey.H:
+                    DisplayManager.GetInstance().DisplayHelp(board,player);
+                    break;
+
 
             }
         }

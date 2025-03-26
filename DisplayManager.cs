@@ -18,6 +18,21 @@ public sealed class DisplayManager
         }
         return _instance;
     }
+    public void DisplayHelp(Board board, Player player)
+    {
+        Console.Clear();
+        Console.Write(board.GetHelp.ToString());
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\nPress \'H\' to back to game");
+        Console.ResetColor();
+
+        switch (Console.ReadKey().Key)
+        {
+            case ConsoleKey.H:
+                DisplayManager.GetInstance().DisplayGameState(board, player);
+                break;
+        }
+    }
     public void DisplayGameState(Board board, Player player)
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -31,13 +46,20 @@ public sealed class DisplayManager
                 if (player.Position.X == i && player.Position.Y == j)
                 {
                     //zawsze player pokryje wszystko na co moze isc
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(player.Sign);
+                    Console.ResetColor();
                 }
                 else
                 {
-
+                    if(board._tiles[i, j].IsEnemy())
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.Write(board._tiles[i, j].GetSymbol());
+                        Console.ResetColor();
+                    }
+                    else 
                     Console.Write(board._tiles[i, j].GetSymbol());
-
                 }
 
             }
@@ -54,7 +76,8 @@ public sealed class DisplayManager
             Console.Write(new String(' ', 2 * board.GetW));
         }
         Console.SetCursorPosition(0, board.GetH + 3);
-        if (board._tiles[player.Position.X, player.Position.Y].IsItem())
+        if (board._tiles[player.Position.X, player.Position.Y].IsItem() ||
+            board._tiles[player.Position.X, player.Position.Y].IsEnemy())
         {
             board._tiles[player.Position.X, player.Position.Y].WriteItems();
         }

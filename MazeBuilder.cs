@@ -29,6 +29,7 @@ public class DefaultMazeBuilder : IMazeBuilder
 {
     private Board _board;
     private Random _rand = new Random();
+    bool addedInfo = false;
     public DefaultMazeBuilder(int width = 20, int height = 40)
     {
         _board = new Board(width, height);
@@ -216,6 +217,15 @@ public class DefaultMazeBuilder : IMazeBuilder
 
             }
         }
+        if (!addedInfo)
+        {
+            _board._help.AppendLine("INVENTORY CONTROLS:");
+            _board._help.AppendLine("E - Pick up item");
+            _board._help.AppendLine("T - Drop item");
+            _board._help.AppendLine("V - Move item from hand to equipment");
+            _board._help.AppendLine("G - Move item from equipment to hand");
+               addedInfo = true;
+        }
 
     }
     public void GenerateElixirs(int amount)
@@ -250,6 +260,15 @@ public class DefaultMazeBuilder : IMazeBuilder
 
                 }
             }
+        }
+        if (!addedInfo)
+        {
+            _board._help.AppendLine("INVENTORY CONTROLS:");
+            _board._help.AppendLine("E - Pick up item");
+            _board._help.AppendLine("T - Drop item");
+            _board._help.AppendLine("V - Move item from hand to equipment");
+            _board._help.AppendLine("G - Move item from equipment to hand");
+            addedInfo = true;
         }
     }
     public void GenerateModifiedWeapons(int amount)
@@ -314,7 +333,15 @@ public class DefaultMazeBuilder : IMazeBuilder
 
             }
         }
-
+        if (!addedInfo)
+        {
+            _board._help.AppendLine("INVENTORY CONTROLS:");
+            _board._help.AppendLine("E - Pick up item");
+            _board._help.AppendLine("T - Drop item");
+            _board._help.AppendLine("V - Move item from hand to equipment");
+            _board._help.AppendLine("G - Move item from equipment to hand");
+            addedInfo = true;
+        }
     }
     public void GenerateItems(int amount)
     {
@@ -349,10 +376,15 @@ public class DefaultMazeBuilder : IMazeBuilder
                 }
 
             }
-
-
-
-
+        }
+        if (!addedInfo)
+        {
+            _board._help.AppendLine("INVENTORY CONTROLS:");
+            _board._help.AppendLine("E - Pick up item");
+            _board._help.AppendLine("T - Drop item");
+            _board._help.AppendLine("V - Move item from hand to equipment");
+            _board._help.AppendLine("G - Move item from equipment to hand");
+            addedInfo = true;
         }
     }
     public void GenerateCurrencies(int amount)
@@ -378,6 +410,9 @@ public class DefaultMazeBuilder : IMazeBuilder
 
             }
         }
+        _board._help.AppendLine("CURRENCY INTERACTIONS:");
+        _board._help.AppendLine("Collect as much money as you can!");
+        _board._help.AppendLine("E - Collect money to pocket");
     }
 
     public void GenerateModifiedItems(int amount)
@@ -421,12 +456,17 @@ public class DefaultMazeBuilder : IMazeBuilder
                 {
                     _board.AddItem(new Point(y, x), new HolyDecorator(new Log()));
                     i++;
-
                 }
-
             }
-
-
+        }
+        if (!addedInfo)
+        {
+            _board._help.AppendLine("INVENTORY CONTROLS:");
+            _board._help.AppendLine("E - Pick up item");
+            _board._help.AppendLine("T - Drop item");
+            _board._help.AppendLine("V - Move item from hand to equipment");
+            _board._help.AppendLine("G - Move item from equipment to hand");
+            addedInfo = true;
         }
     }
     public void GenerateEnemies(int amount)
@@ -460,6 +500,8 @@ public class DefaultMazeBuilder : IMazeBuilder
 
 
         }
+        _board._help.AppendLine("INTERACTIONS WITH ENEMY:");
+        _board._help.AppendLine("F - fight with enemy");
     }
 }
 public class Director

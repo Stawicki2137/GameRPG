@@ -13,6 +13,7 @@ public class Tile
     public char _symbol;
     private List<Item> _items = new List<Item>();
     private IEnemy? _enemy = null;
+    public bool IsEnemy() => _enemy != null;
     public Item RemoveAtIndex(int index)
     {
 
@@ -24,6 +25,12 @@ public class Tile
     public void WriteItems()
     {
         int k = 1;
+        if(_enemy != null)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.Write(_enemy.GetName() + "");
+            Console.ResetColor();
+        }
         foreach (var item in _items)
         {
             Console.Write($"{k}." + item.GetName() + " ");
@@ -85,10 +92,12 @@ public class Tile
 public class Board
 {
     private readonly int H;
-    private readonly int W;
-    public Tile[,] _tiles; 
+    private readonly int W; 
+    public Tile[,] _tiles;
+    public StringBuilder _help = new StringBuilder();
     private char _horizontalFrame;
     private char _verticalFrame;    
+    public StringBuilder GetHelp => _help;
     public int GetH => H;
     public int GetW => W;
     public Board(int height = 20, int width = 40, char horizontalFrame = '-', char verticalFrame = '|')
@@ -106,6 +115,13 @@ public class Board
                 _tiles[i, j] = new Tile(' ');
             }
         }
+        _help.AppendLine(new String('-', 20));
+        _help.AppendLine("MOVE CONTROLS:");
+        _help.AppendLine("W - move forward");
+        _help.AppendLine("S - move backward");
+        _help.AppendLine("A - move left");
+        _help.AppendLine("D - move right");
+
     }
 
     public int ItemCount(Point position)
@@ -139,53 +155,7 @@ public class Board
     }
     public void WriteBinds()
     {
-        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq W-S-A-D-moves");
-    }
-    public void DrawBoard(Player player)
-    {
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.SetCursorPosition(0, 22);
-        Console.Write(new String(' ', 40));
-        for (int i = 0; i < H; i++)
-        {
-            Console.SetCursorPosition(0, i);
-            for (int j = 0; j < W; j++)
-            {
-                if (player.Position.X == i && player.Position.Y == j)
-                {
-                    //zawsze player pokryje wszystko na co moze isc
-                    Console.Write(player.Sign);
-                }
-                else
-                {
-
-                    Console.Write(_tiles[i, j].GetSymbol());
-
-                }
-
-            }
-        }
-        Console.SetCursorPosition(0, H + 1);
-        {
-            WriteBinds();
-        }
-        /* Console.SetCursorPosition(0, 22);
-         Console.Write(new String(' ', 20)); */
-
-        Console.SetCursorPosition(0, H + 3);
-        {
-            Console.Write(new String(' ', 2 * W));
-        }
-        Console.SetCursorPosition(0, H + 3);
-        if (_tiles[player.Position.X, player.Position.Y].IsItem())
-        {
-            _tiles[player.Position.X, player.Position.Y].WriteItems();
-        }
-        Console.SetCursorPosition(W + 2, 0);
-        player.WriteEquipment(W + 2, 0);
-        player.WritePLayer(W + 2, 13 + 3);
-        player.WriteHands(W + 2, 13);
-
+        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq W-S-A-D-moves H-Help");
     }
 
     public void StartGame()
@@ -203,15 +173,16 @@ public class Board
         director.AddRandomPaths();
         director.AddChamber();
         director.GenerateEnemies();
-        /*
+        
         director.GenerateItems();
         director.GenerateModifiedItems();
         director.GenerateModifiedWeapons();
         director.GenerateCurrencies();
         director.GenerateWeapons();
-        */
+        
         director.GenerateElixirs();
         Board builtBoard = director.GetBoard();
+        this._help = builtBoard.GetHelp;
         this._tiles = builtBoard._tiles;
 
     }
