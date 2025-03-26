@@ -25,10 +25,10 @@ public class Tile
     public void WriteItems()
     {
         int k = 1;
-        if(_enemy != null)
+        if (_enemy != null)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.Write(_enemy.GetName() + "");
+            Console.Write(_enemy.GetName() + " ");
             Console.ResetColor();
         }
         foreach (var item in _items)
@@ -39,7 +39,7 @@ public class Tile
     }
     public bool AddEnemy(IEnemy enemy)
     {
-        if(_enemy == null)
+        if (_enemy == null)
         {
             _enemy = enemy;
             return true;
@@ -65,10 +65,10 @@ public class Tile
     {
         if (IsItem())
         {
-            if(_enemy == null)
-            return _items.First().GetSign();
-            else 
-            return _enemy.GetSign();
+            if (_enemy == null)
+                return _items.First().GetSign();
+            else
+                return _enemy.GetSign();
         }
         else if (_enemy != null)
         {
@@ -92,11 +92,12 @@ public class Tile
 public class Board
 {
     private readonly int H;
-    private readonly int W; 
+    private readonly int W;
     public Tile[,] _tiles;
     public StringBuilder _help = new StringBuilder();
+    public StringBuilder _binds = new StringBuilder();
     private char _horizontalFrame;
-    private char _verticalFrame;    
+    private char _verticalFrame;
     public StringBuilder GetHelp => _help;
     public int GetH => H;
     public int GetW => W;
@@ -115,12 +116,15 @@ public class Board
                 _tiles[i, j] = new Tile(' ');
             }
         }
-        _help.AppendLine(new String('-', 20));
+        _help.AppendLine(new String('-', 40));
         _help.AppendLine("MOVE CONTROLS:");
         _help.AppendLine("W - move forward");
         _help.AppendLine("S - move backward");
         _help.AppendLine("A - move left");
         _help.AppendLine("D - move right");
+        _binds.Append("Q-Quit H-Help W-S-A-D-moves");
+
+
 
     }
 
@@ -155,33 +159,39 @@ public class Board
     }
     public void WriteBinds()
     {
-        Console.Write("Q-Quit E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq W-S-A-D-moves H-Help");
+        Console.Write(_binds.ToString());
     }
 
     public void StartGame()
     {
         InitializeBoard();
     }
-  
+
     private void InitializeBoard()
     {
         var builder = new DefaultMazeBuilder();
         var director = new Director(builder);
+
         director.BuildFilledDungegon();
         //director.BuildEmptyDungegon();
+
         director.AddCentralRoom();
         director.AddRandomPaths();
         director.AddChamber();
+        director.GenerateItems(1);
+
+        /*
         director.GenerateEnemies();
-        
         director.GenerateItems();
         director.GenerateModifiedItems();
         director.GenerateModifiedWeapons();
         director.GenerateCurrencies();
         director.GenerateWeapons();
-        
         director.GenerateElixirs();
+        */
+
         Board builtBoard = director.GetBoard();
+        this._binds = builtBoard._binds;
         this._help = builtBoard.GetHelp;
         this._tiles = builtBoard._tiles;
 

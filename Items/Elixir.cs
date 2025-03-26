@@ -26,7 +26,7 @@ public abstract class Elixir : Item
 }
 public class WisdomElixir : UselessItem
 {
-    public WisdomElixir() : base("WisdomElixir")
+    public WisdomElixir() : base("Wisdom Elixir")
     {
         signifying = 'E';
     }
@@ -43,7 +43,7 @@ public class WisdomElixir : UselessItem
 }
 public class PudzianElixir : UselessItem
 {
-    public PudzianElixir() : base("PudzianElixir")
+    public PudzianElixir() : base("Pudzian Elixir")
     {
         signifying = 'E';
     }
@@ -67,7 +67,7 @@ public class PudzianElixir : UselessItem
 }
 public class  HealthElixir: UselessItem
 {
-    public HealthElixir() : base("HealthElixir") { signifying = 'E'; }
+    public HealthElixir() : base("Health Elixir") { signifying = 'E'; }
     public override void ApplyModifiers(Player player)
     {
         base.ApplyModifiers(player);

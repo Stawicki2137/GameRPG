@@ -225,6 +225,8 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
                addedInfo = true;
+            _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
+
         }
 
     }
@@ -269,6 +271,8 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
             addedInfo = true;
+            _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
+
         }
     }
     public void GenerateModifiedWeapons(int amount)
@@ -340,6 +344,7 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("T - Drop item");
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
+            _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
             addedInfo = true;
         }
     }
@@ -384,6 +389,7 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("T - Drop item");
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
+            _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
             addedInfo = true;
         }
     }
@@ -413,6 +419,8 @@ public class DefaultMazeBuilder : IMazeBuilder
         _board._help.AppendLine("CURRENCY INTERACTIONS:");
         _board._help.AppendLine("Collect as much money as you can!");
         _board._help.AppendLine("E - Collect money to pocket");
+        _board._binds.Append(" E-Collect");
+
     }
 
     public void GenerateModifiedItems(int amount)
@@ -466,6 +474,8 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("T - Drop item");
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
+            _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
+
             addedInfo = true;
         }
     }
@@ -500,6 +510,7 @@ public class DefaultMazeBuilder : IMazeBuilder
 
 
         }
+        _board._binds.Append(" F-fight");
         _board._help.AppendLine("INTERACTIONS WITH ENEMY:");
         _board._help.AppendLine("F - fight with enemy");
     }

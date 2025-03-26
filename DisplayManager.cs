@@ -5,7 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameRPG;
-
+public static class StringBuilderExtensions
+{
+    public static void RemoveSubstring(this StringBuilder sb, string value)
+    {
+        int index = sb.ToString().IndexOf(value);
+        if (index >= 0)
+        {
+            sb.Remove(index, value.Length);
+        }
+    }
+}
 public sealed class DisplayManager
 {
     private DisplayManager() { }
@@ -21,10 +31,31 @@ public sealed class DisplayManager
     public void DisplayHelp(Board board, Player player)
     {
         Console.Clear();
+        bool isItem = false;
+        for (int i = 0; i < board.GetH; i++)
+        {
+            for (int j = 0; j < board.GetW; j++)
+            {
+                if (board.ItemCount(new Point(i, j))!=0)
+
+                {
+                    isItem = true;
+                    break;
+                }
+
+            }
+        }
+        if (!isItem)
+        {
+            board._binds.RemoveSubstring("E-Equip");
+            board._help.RemoveSubstring("E - Pick up item");
+        }
         Console.Write(board.GetHelp.ToString());
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("\nPress \'H\' to back to game");
         Console.ResetColor();
+        Console.WriteLine(new String('-', 40));
+
 
         switch (Console.ReadKey().Key)
         {
