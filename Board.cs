@@ -11,9 +11,6 @@ public class Tile
 {
     private char _symbol;
     private List<Item> _items = new List<Item>();
-    // pomysl jeset  zeby das liste na currency i jak bede wchodzil graczem na tile na ktorym lista currency nie 
-    // jest pusta to moge podniesc do kiermany od razu
-
     public Item RemoveAtIndex(int index)
     {
 
@@ -70,7 +67,7 @@ public class Board
 {
     private readonly int H;
     private readonly int W;
-    private Tile[,] _tiles; //tiles
+    private Tile[,] _tiles; 
     private char _horizontalFrame;
     private char _verticalFrame;
     public Board(int height = 20, int width = 40, char horizontalFrame = '-', char verticalFrame = '|')
@@ -186,22 +183,35 @@ public class Board
             }
 
         }
+        for (int i = 1; i <= H - 2; i++)
+        {
+            if (Random.Shared.NextDouble() < 0.5)
+            {
+                AddItem(new Point(i, 6), new Coin());
+            }
+            if (Random.Shared.NextDouble() > 0.7)
+            {
+                AddItem(new Point(i, 6), new Gold());
+
+            }
+
+        }
 
         AddItem(new Point(15, 30), new LuckyDecorator(new UltraStrong(new LightSword())));
 
-        AddItem(new Point(5, 2), new Damned(new Dagger()));
-        AddItem(new Point(3, 6), new Gold());
-        AddItem(new Point(6, 5), new TwoHandedHeavySword());
-        AddItem(new Point(6, 4), new TwoHandedHeavySword());
-        AddItem(new Point(6, 4), new Log());
-        AddItem(new Point(9, 5), new LuckyDecorator( new HolyDecorator(new Stone())));
+        AddItem(new Point(15, 12), new Damned(new Dagger()));
+        AddItem(new Point(13, 16), new Gold());
+        AddItem(new Point(16, 15), new TwoHandedHeavySword());
+        AddItem(new Point(16, 14), new TwoHandedHeavySword());
+        AddItem(new Point(16, 4), new Log());
+        AddItem(new Point(19, 15), new LuckyDecorator( new HolyDecorator(new Stone())));
         AddItem(new Point(7, 7), new HollowShield());
         AddItem(new Point(10, 10), new LightSword());
-        AddItem(new Point(5, 5), new LightSword());
-        AddItem(new Point(3, 3), new Strong(new HolyDecorator(new HollowShield())));
+        AddItem(new Point(15, 5), new LightSword());
+        AddItem(new Point(3, 13), new Strong(new HolyDecorator(new HollowShield())));
         AddItem(new Point(10, 10), new LuckyDecorator((new LightSword())));
-        AddItem(new Point(2,2), new Log());
-        AddItem(new Point(2,2), new Strong(new LuckyDecorator(new HolyDecorator(new Dagger()))));
+        AddItem(new Point(2,12), new Log());
+        AddItem(new Point(12,2), new Strong(new LuckyDecorator(new HolyDecorator(new Dagger()))));
     }
     private void InitializeBoard()
     {

@@ -44,7 +44,7 @@ public class Player
 
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
-        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 7)
+        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
     {
         Position = position;
         _board = board;
