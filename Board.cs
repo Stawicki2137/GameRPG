@@ -112,7 +112,6 @@ public class Board
         {
             for (int j = 0; j < W; j++)
             {
-                // Na start ustaw jakiś znak (np. spację)
                 _tiles[i, j] = new Tile(' ');
             }
         }
@@ -180,7 +179,7 @@ public class Board
         director.AddChamber();
         director.GenerateItems(1);
 
-        /*
+        
         director.GenerateEnemies();
         director.GenerateItems();
         director.GenerateModifiedItems();
@@ -188,7 +187,7 @@ public class Board
         director.GenerateCurrencies();
         director.GenerateWeapons();
         director.GenerateElixirs();
-        */
+        
 
         Board builtBoard = director.GetBoard();
         this._binds = builtBoard._binds;
