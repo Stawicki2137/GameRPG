@@ -64,11 +64,19 @@ public sealed class DisplayManager
                 break;
         }
     }
+    public void DisplayMessage(string message)
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.SetCursorPosition(0, 22);
+        Console.Write(new String(' ', 45));
+        Console.SetCursorPosition(0, 22);
+        Console.Write(message);
+    }
     public void DisplayGameState(Board board, Player player)
     {
         Console.OutputEncoding = Encoding.UTF8;
         Console.SetCursorPosition(0, 22);
-        Console.Write(new String(' ', 40));
+        Console.Write(new String(' ', 45));
         for (int i = 0; i < board.GetH; i++)
         {
             Console.SetCursorPosition(0, i);

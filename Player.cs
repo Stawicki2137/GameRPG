@@ -178,10 +178,10 @@ public class Player
     
     public bool MoveItemFromHandToEq()
     {
-        Console.SetCursorPosition(0, 22);
-        Console.Write("Select hand (R - Right, L - Left): ");
+        DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left): ");
 
         ref Item? hand = ref _rightHand;
+        if(_rightHand ==  null && _leftHand == null) return false;
         switch (Console.ReadKey().Key)
         {
             case ConsoleKey.R:
@@ -223,10 +223,9 @@ public class Player
     }
     public bool MoveItemFromEqToHand()
     {
-       
-        Console.SetCursorPosition(0, 22);
-        Console.Write("Select hand (R - Right, L - Left): ");
 
+        DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left): ");
+        if(_equipment.Count == 0) return false;
         ref Item? hand = ref _rightHand;
         bool bothHandsEmpty = true;
         if(_leftHand != null || _rightHand != null) // jesli ktoras jest nie pusta to obie nie sa puste
@@ -246,10 +245,7 @@ public class Player
                 return false; 
         }
         int count = _equipment.Count;
-        Console.SetCursorPosition(0, 22);
-        Console.Write(new String(' ', 40));
-        Console.SetCursorPosition(0, 22);
-        Console.Write("Select item to take:");
+        DisplayManager.GetInstance().DisplayMessage("Select item to take:");
 
         switch (Console.ReadKey().Key)
         {
@@ -393,9 +389,7 @@ public class Player
             }
             else
             {
-
-                Console.SetCursorPosition(0, 22);
-                Console.Write("Select item:");
+                DisplayManager.GetInstance().DisplayMessage("Select item:");
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
@@ -468,8 +462,8 @@ public class Player
             else
             {
 
-                Console.SetCursorPosition(0, 22);
-                Console.Write("Select item:");
+                DisplayManager.GetInstance().DisplayMessage("Select item:");
+
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
