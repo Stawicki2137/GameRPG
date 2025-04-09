@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -77,8 +78,14 @@ public sealed class DisplayManager
     }
     public void DisplayElixirs(string message)
     {
-
+       int y = 13+2;
+       int x = 42 + 33;
+        Console.SetCursorPosition(x, y);
+        Console.Write(new string(' ', 20));
+        Console.SetCursorPosition(x, y);
+        Console.Write(message);
     }
+
     public void DisplayGameState(Board board, Player player)
     {
         Console.OutputEncoding = Encoding.UTF8;

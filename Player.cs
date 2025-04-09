@@ -380,7 +380,7 @@ public class Player : ISubject
             {
                 hand.ApplyModifiers(this);
                 NextTurn();
-
+                
                 return 1;
             }
             return -1;

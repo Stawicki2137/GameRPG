@@ -94,12 +94,14 @@ public class PudzianElixir : Item
     public override void ApplyModifiers(Player player)
     {
         if (IsUsed) return;
+       // DisplayManager.GetInstance().DisplayElixirs($"{Name} activated");
         player.Attach(new PudzianElixirEffect(_duration));
         MarkAsUsed();
     }
 
     public override void RemoveModifiers(Player player)
     {
+
         // tu mozna dodac antidotum w razie cos 
     }
 
@@ -124,6 +126,8 @@ public class PudzianElixirEffect : TimedElixirObserver
         player.ChangeAggression(-6);
         player.ChangeLuck(-4);
         player.ChangePower(-7);
+       // DisplayManager.GetInstance().DisplayElixirs("$Pudzian desactivated");
+
     }
 }
 public class  HealthElixir: Item
