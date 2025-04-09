@@ -13,17 +13,20 @@ public interface IItem
     char GetSign();
     void ApplyModifiers(Player player);
     void RemoveModifiers(Player player);
+    bool ApplyOnEquip();
 }
 public abstract class Item : IItem
 {
     public char signifying { get; protected set; } = 'I';
+    private bool _applayOnEquip = true;
 
     public string Name { get; protected set; }
     public bool NeedsTwoArms { get; protected set; }
-    public Item(string name, bool needsTwoArms = false)
+    public Item(string name, bool needsTwoArms = false, bool applyOnEquip = true)
     {
         Name = name;
         NeedsTwoArms = needsTwoArms;
+        _applayOnEquip = applyOnEquip;
     }
     public virtual char GetSign() => signifying;
     public virtual string GetName()
@@ -32,10 +35,12 @@ public abstract class Item : IItem
     }
     public virtual void ApplyModifiers(Player player) { } 
     public virtual void RemoveModifiers(Player player) { }
+    public bool ApplyOnEquip() => _applayOnEquip;
 
     public virtual void OnPickUp(Player player)
     { 
         player._equipment.Add(this);
     }
-    
+
+  
 }

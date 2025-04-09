@@ -251,13 +251,13 @@ public class DefaultMazeBuilder : IMazeBuilder
                 }
                 if (rand % 3 == 1)
                 {
-                    _board.AddItem(new Point(y, x), new PudzianElixir());
+                    _board.AddItem(new Point(y, x), new PudzianElixir(16));
                     i++;
 
                 }
                 if (rand % 3 == 2)
                 {
-                    _board.AddItem(new Point(y, x), new WisdomElixir());
+                    _board.AddItem(new Point(y, x), new WisdomElixir(20));
                     i++;
 
                 }

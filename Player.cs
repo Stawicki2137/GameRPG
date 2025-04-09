@@ -18,8 +18,26 @@ public struct Point
         Y = y;
     }
 }
-public class Player
+public class Player : ISubject
 {
+    private List<IObserver> _observers = new();
+
+    public void Attach(IObserver observer) => _observers.Add(observer);
+    public void Detach(IObserver observer) => _observers.Remove(observer);
+
+    public void Notify()
+    {
+        foreach (var observer in _observers.ToList()) 
+        {
+            observer.Update(this);
+        }
+    }
+
+    public void NextTurn()
+    {
+        playerMoves++;
+        Notify(); 
+    }
     public Point Position;
     private Board _board;
     public char Sign = '¶';
@@ -28,6 +46,11 @@ public class Player
 
     private Item? _leftHand;
     private Item? _rightHand;
+    public bool IsLeftHandNull => _leftHand == null;
+    public bool IsRightHandNull => _rightHand == null;
+    public string LeftHandItemGetName => _leftHand.GetName();
+    public string RighttHandItemGetName => _rightHand.GetName();
+
     // player attr
     private string _name;
     private int _power;
@@ -81,7 +104,7 @@ public class Player
         if (_board.IsLegalMove(newPosition))
         {
             Position = newPosition;
-            playerMoves++;
+            NextTurn();
             DisplayManager.GetInstance().DisplayGameState(_board, this);
 
         }
@@ -135,47 +158,6 @@ public class Player
         
 
 
-    }
-
-    public void WriteHands(int x, int y)
-    {
-        Console.SetCursorPosition(x, y);
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.SetCursorPosition(x, y);
-        Console.Write(new String(' ', 60));
-        Console.SetCursorPosition(x, y);
-        Console.Write("Left Hand: " + (_leftHand == null ? "empty" : _leftHand.GetName()));
-        Console.SetCursorPosition(x, y+1);
-        Console.Write(new String(' ', 60));
-        Console.SetCursorPosition(x, y+1);
-        Console.Write("Right Hand: " + (_rightHand == null ? "empty" : _rightHand.GetName()));
-        Console.ResetColor();
-
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x">horizontal cursor position</param>
-    /// <param name="y">vertical cursor postion</param>
-    public void WriteEquipment(int x, int y)
-    {
-        Console.SetCursorPosition(x, y);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("---Equipment---");
-        int k = 1;
-        for (int i = 1; i < 12; i++)
-        {
-            Console.SetCursorPosition(x, y + i);
-            Console.Write(new String(' ', 50));
-        }
-        foreach (Item item in _equipment)
-        {
-
-            Console.SetCursorPosition(x, y + k);
-            Console.Write($"{k}." + item.GetName());
-            k++;
-        }
-        Console.ResetColor();
     }
     
     public bool MoveItemFromHandToEq()

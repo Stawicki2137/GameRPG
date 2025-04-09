@@ -151,6 +151,21 @@ public sealed class DisplayManager
         Console.Write($"Player moves: {player.playerMoves}");
         Console.ResetColor();
         player.WritePLayer(board.GetW + 2, 13 + 3);
-        player.WriteHands(board.GetW + 2, 13);
+       x = board.GetW+2;
+        y = 13;
+            Console.SetCursorPosition(x, y);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(x, y);
+            Console.Write(new String(' ', 60));
+            Console.SetCursorPosition(x, y);
+            Console.Write("Left Hand: " + (player.IsLeftHandNull ? "empty" : player.LeftHandItemGetName));
+            Console.SetCursorPosition(x, y + 1);
+            Console.Write(new String(' ', 60));
+            Console.SetCursorPosition(x, y + 1);
+            Console.Write("Right Hand: " + (player.IsRightHandNull? "empty" : player.RighttHandItemGetName));
+            Console.ResetColor();
+
+        
+     
     }
 }
