@@ -14,11 +14,18 @@ public interface IItem
     void ApplyModifiers(Player player);
     void RemoveModifiers(Player player);
     bool ApplyOnEquip();
+    ConsoleColor GetColor();
 }
 public abstract class Item : IItem
 {
     public char signifying { get; protected set; } = 'I';
-    private bool _applayOnEquip = true;
+    protected bool _applayOnEquip = true;
+    public bool IsUsed { get; private set; } = false;
+
+    public void MarkAsUsed()
+    {
+        IsUsed = true;
+    }
 
     public string Name { get; protected set; }
     public bool NeedsTwoArms { get; protected set; }
@@ -42,5 +49,8 @@ public abstract class Item : IItem
         player._equipment.Add(this);
     }
 
-  
+    public ConsoleColor GetColor()
+    {
+       return ConsoleColor.White;
+    }
 }

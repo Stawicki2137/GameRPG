@@ -111,6 +111,38 @@ public class DropItemHandler : BaseControlHandler
     }
 }
 
+public class DrinkElixirHandler : BaseControlHandler
+{
+    public override bool Handle(ConsoleKey key, Player player, Board board, ref bool running)
+    {
+        if (key == ConsoleKey.K)
+        {
+            int p = player.DrinkElixir();
+            if (p==1)
+            {
+                DisplayManager.GetInstance().DisplayGameState(board, player);
+                DisplayManager.GetInstance().DisplayMessage($"Elixir drunk");
+                return true;
+            }
+            else if(p==-1)
+            {
+                DisplayManager.GetInstance().DisplayMessage($"Nothing to drink");
+
+                return true;
+            }
+            else if (p==0)
+            {
+                DisplayManager.GetInstance().DisplayMessage($"Vial is empty!");
+
+                return true;
+
+            }
+        }
+
+        return base.Handle(key, player, board, ref running);
+    }
+}
+
 public class MoveItemFromEqToHand: BaseControlHandler
 {
     public override bool Handle(ConsoleKey key, Player player, Board board, ref bool running)
@@ -213,6 +245,7 @@ public class InputHandlerChain
             .SetNext(new DropItemHandler())
             .SetNext(new MoveItemFromEqToHand())
             .SetNext(new MoveItemFromHandToEq())
+            .SetNext(new DrinkElixirHandler())
             .SetNext(new DisplayHelp())
             .SetNext(new ExitHandler())
             .SetNext(new InvalidInputHandler());

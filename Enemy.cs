@@ -13,6 +13,10 @@ public interface IEnemy
 }
 public class Enemy : IEnemy
 {
+    public virtual ConsoleColor GetColor()
+    {
+        return ConsoleColor.DarkBlue;
+    }
     private string _name;
     private char _sign;
     public Enemy(string name, char sign='E')

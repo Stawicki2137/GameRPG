@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameRPG;
 
+
 public abstract class TimedElixirObserver : IObserver
 {
     private int _remainingTurns;
@@ -36,37 +37,23 @@ public abstract class TimedElixirObserver : IObserver
     protected abstract void OnRemove(Player player);
 }
 
-public abstract class Elixir : Item
-{
-    protected Item _item;
-    protected Elixir(string name, bool needsTwoArms = false, bool apply=false) : base(name, needsTwoArms,apply) { 
-        signifying = 'E'; 
-        _item = this;
-    }
-    public override void ApplyModifiers(Player player)
-    {
-        _item.ApplyModifiers(player);
-    }
-    public override void RemoveModifiers(Player player)
-    {
-        _item.RemoveModifiers(player);
-    }
-}
-
 public class WisdomElixir : Item
 {
     private int _duration;
 
     public WisdomElixir(int duration = 20)
-        : base("Wisdom Elixir") 
+        : base("Wisdom Elixir",false,false) 
     {
         signifying = 'E';
         _duration = duration;
     }
-
+    
     public override void ApplyModifiers(Player player)
     {
+        if (IsUsed)
+            return;
         player.Attach(new WisdomElixirEffect(_duration));
+        MarkAsUsed();
     }
 
     public override void RemoveModifiers(Player player)
@@ -98,7 +85,7 @@ public class PudzianElixir : Item
     private int _duration;
 
     public PudzianElixir(int duration = 15)
-        : base("Pudzian Elixir")
+        : base("Pudzian Elixir",false, false)
     {
         signifying = 'P';
         _duration = duration;
@@ -106,7 +93,9 @@ public class PudzianElixir : Item
 
     public override void ApplyModifiers(Player player)
     {
+        if (IsUsed) return;
         player.Attach(new PudzianElixirEffect(_duration));
+        MarkAsUsed();
     }
 
     public override void RemoveModifiers(Player player)
@@ -137,9 +126,9 @@ public class PudzianElixirEffect : TimedElixirObserver
         player.ChangePower(-7);
     }
 }
-public class  HealthElixir: UselessItem
+public class  HealthElixir: Item
 {
-    public HealthElixir() : base("Health Elixir") { signifying = 'E'; }
+    public HealthElixir() : base("Health Elixir", false, false) { signifying = 'E'; }
     public override void ApplyModifiers(Player player)
     {
         base.ApplyModifiers(player);

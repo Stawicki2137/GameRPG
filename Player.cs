@@ -240,10 +240,14 @@ public class Player : ISubject
                     if(!bothHandsEmpty) return false;
                     _leftHand = _equipment[0];
                     _rightHand = _equipment[0];
-                    _equipment.RemoveAt(0);
+                     _equipment.RemoveAt(0);
                     return true;
                 }
                 hand = _equipment[0];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(0);
                 break;
             case ConsoleKey.D2:
@@ -257,6 +261,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[1];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(1);
                 break;
             case ConsoleKey.D3:
@@ -270,6 +278,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[2];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(2);
                 break;
             case ConsoleKey.D4:
@@ -283,6 +295,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[3];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(3);
                 break;
             case ConsoleKey.D5:
@@ -296,6 +312,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[4];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(4);
                 break;
             case ConsoleKey.D6:
@@ -309,6 +329,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[5];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(5);
                 break;
             case ConsoleKey.D7:
@@ -322,6 +346,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[6];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(6);
                 break;
             case ConsoleKey.D8:
@@ -335,6 +363,10 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[7];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(7);
                 break;
             case ConsoleKey.D9:
@@ -348,15 +380,50 @@ public class Player : ISubject
                     return true;
                 }
                 hand = _equipment[8];
+                if (hand.ApplyOnEquip())
+                {
+                    hand.ApplyModifiers(this);
+                }
                 _equipment.RemoveAt(8);
                 break;
             default:
                 return false;
         }
-        hand.ApplyModifiers(this);
         return true;
 
 
+    }
+    public int DrinkElixir()
+    {
+        if(_leftHand == null && _rightHand == null)
+        {
+            return -1;
+        }
+        else
+        {
+            ref Item? hand = ref _rightHand;
+            DisplayManager.GetInstance().DisplayMessage("Choose arm (R-right L-Left)");
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.R:
+                    hand = ref _rightHand;
+                    if (hand == null) return -1;
+                    break;
+                case ConsoleKey.L:
+                    hand = ref _leftHand;
+                    if (hand == null) return -1;
+                    break;
+                default:
+                    return -1;
+            }
+            if(hand.IsUsed) return 0;
+            if (hand.ApplyOnEquip() == false)
+            {
+                hand.ApplyModifiers(this);
+                return 1;
+            }
+            return -1;
+        }
     }
 
     public bool DropItem()

@@ -270,10 +270,15 @@ public class DefaultMazeBuilder : IMazeBuilder
             _board._help.AppendLine("T - Drop item");
             _board._help.AppendLine("V - Move item from hand to equipment");
             _board._help.AppendLine("G - Move item from equipment to hand");
+
             addedInfo = true;
             _board._binds.Append(" E-Equip T-DropItem G-TakeItemToHand V-ItemFromHandToEq");
 
         }
+        _board._help.AppendLine("K - Drink Elixir");
+        _board._binds.Append(" K-Drink");
+
+
     }
     public void GenerateModifiedWeapons(int amount)
     {
