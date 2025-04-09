@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace GameRPG;
 public static class StringBuilderExtensions
@@ -73,6 +74,10 @@ public sealed class DisplayManager
         Console.Write(new String(' ', 45));
         Console.SetCursorPosition(0, 22);
         Console.Write(message);
+    }
+    public void DisplayElixirs(string message)
+    {
+
     }
     public void DisplayGameState(Board board, Player player)
     {
@@ -150,8 +155,52 @@ public sealed class DisplayManager
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.Write($"Player moves: {player.playerMoves}");
         Console.ResetColor();
-        player.WritePLayer(board.GetW + 2, 13 + 3);
-       x = board.GetW+2;
+        x = board.GetW+2;
+        y = 13 + 3;
+        y = y - 1;
+        Console.SetCursorPosition(x, y);
+        Console.SetCursorPosition(x, y);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y);
+        Console.Write("---" + player.GetName() + "---");
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.SetCursorPosition(x + 32, y + 1);
+        Console.Write(new String(' ', 20));
+        Console.SetCursorPosition(x + 32, y + 1);
+        Console.Write($"Coins: {player.GetCoinNumber}");
+        Console.SetCursorPosition(x + 32, y + 2);
+        Console.Write(new String(' ', 20));
+        Console.SetCursorPosition(x + 32, y + 2);
+        Console.Write($"Gold: {player.GetGoldNumber}");
+        Console.ResetColor();
+
+        Console.SetCursorPosition(x, y + 1);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 1);
+        Console.Write($"Health {player.GetHealth}");
+        Console.SetCursorPosition(x, y + 2);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 2);
+        Console.Write($"Power {player.GetPower}");
+        Console.SetCursorPosition(x, y + 3);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 3);
+        Console.Write($"Luck {player.GetLuck}");
+        Console.SetCursorPosition(x, y + 4);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 4);
+        Console.Write($"Wisdom {player.GetWisdom}");
+        Console.SetCursorPosition(x, y + 5);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 5);
+        Console.Write($"Agility {player.GetAgility}");
+        Console.SetCursorPosition(x, y + 6);
+        Console.Write(new String(' ', 30));
+        Console.SetCursorPosition(x, y + 6);
+        Console.Write($"Aggression {player.GetAggression}");
+        Console.ResetColor();
+        x = board.GetW+2;
         y = 13;
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = ConsoleColor.Cyan;

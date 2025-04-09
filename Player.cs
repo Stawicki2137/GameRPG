@@ -60,6 +60,15 @@ public class Player : ISubject
     private int _aggression;
     private int _wisdom;
     private int _eqCapacity;
+    public int GetWisdom => _wisdom;
+    public int GetAggression => _aggression;
+    public int GetHealth => _health;
+    public int GetLuck => _luck;
+    public int GetAgility => _agility;
+    public int GetPower => _power;
+    public string GetName() => _name;
+    public int GetCoinNumber => _coinNumber;
+    public int GetGoldNumber => _goldNumber;
 
     private int _coinNumber = 0;
     private int _goldNumber = 0;
@@ -109,57 +118,7 @@ public class Player : ISubject
 
         }
     }
-    
-    public void WritePLayer(int x, int y)
-    {
-        y = y - 1;
-        Console.SetCursorPosition(x, y);
-        Console.SetCursorPosition(x, y);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y);
-        Console.Write("---" + _name + "---");
-
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.SetCursorPosition(x+32, y+1);
-        Console.Write(new String(' ', 20));
-        Console.SetCursorPosition(x+32, y+1);
-        Console.Write($"Coins: {_coinNumber}");
-        Console.SetCursorPosition(x + 32, y + 2);
-        Console.Write(new String(' ', 20));
-        Console.SetCursorPosition(x + 32, y + 2);
-        Console.Write($"Gold: {_goldNumber}");
-        Console.ResetColor();
-
-        Console.SetCursorPosition(x, y+1);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 1);
-        Console.Write($"Health {_health}");
-        Console.SetCursorPosition(x, y + 2);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 2);
-        Console.Write($"Power {_power}");
-        Console.SetCursorPosition(x, y + 3);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 3);
-        Console.Write($"Luck {_luck}");
-        Console.SetCursorPosition(x, y + 4);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 4);
-        Console.Write($"Wisdom {_wisdom}");
-        Console.SetCursorPosition(x, y + 5);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 5);
-        Console.Write($"Agility {_agility}");
-        Console.SetCursorPosition(x, y + 6);
-        Console.Write(new String(' ', 30));
-        Console.SetCursorPosition(x, y + 6);
-        Console.Write($"Aggression {_aggression}");
-        Console.ResetColor();
-        
-
-
-    }
-    
+       
     public bool MoveItemFromHandToEq()
     {
         DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left): ");
@@ -420,6 +379,8 @@ public class Player : ISubject
             if (hand.ApplyOnEquip() == false)
             {
                 hand.ApplyModifiers(this);
+                NextTurn();
+
                 return 1;
             }
             return -1;
