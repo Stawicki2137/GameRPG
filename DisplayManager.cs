@@ -64,6 +64,8 @@ public sealed class DisplayManager
                 break;
         }
     }
+    public void DisplayMoves(Player player) { 
+    }
     public void DisplayMessage(string message)
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -121,7 +123,33 @@ public sealed class DisplayManager
             board._tiles[player.Position.X, player.Position.Y].WriteItems();
         }
         Console.SetCursorPosition(board.GetW + 2, 0);
-        player.WriteEquipment(board.GetW + 2, 0);
+        int x = board.GetW;
+        int y = 0;
+        Console.SetCursorPosition(x, y);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("---Equipment---");
+        int k = 1;
+        for (int i = 1; i < 12; i++)
+        {
+            Console.SetCursorPosition(x, y + i);
+            Console.Write(new String(' ', 50));
+        }
+        foreach (Item item in player._equipment)
+        {
+
+            Console.SetCursorPosition(x, y + k);
+            Console.Write($"{k}." + item.GetName());
+            k++;
+        }
+        Console.ResetColor();
+        y = 0;
+        x = board.GetW+17;
+        Console.SetCursorPosition(x, y);
+        Console.Write(new string(' ', 20));
+        Console.SetCursorPosition(x, y);
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write($"Player moves: {player.playerMoves}");
+        Console.ResetColor();
         player.WritePLayer(board.GetW + 2, 13 + 3);
         player.WriteHands(board.GetW + 2, 13);
     }

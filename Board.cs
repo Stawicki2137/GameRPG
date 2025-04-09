@@ -184,7 +184,7 @@ public class Board
         director.GenerateItems();
         director.GenerateModifiedItems();
         director.GenerateModifiedWeapons();
-       // director.GenerateCurrencies();
+        director.GenerateCurrencies();
         director.GenerateWeapons();
         director.GenerateElixirs();
         

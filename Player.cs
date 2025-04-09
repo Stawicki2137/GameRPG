@@ -24,6 +24,7 @@ public class Player
     private Board _board;
     public char Sign = '¶';
     public List<Item> _equipment = new List<Item>();
+    public int playerMoves = 0;
 
     private Item? _leftHand;
     private Item? _rightHand;
@@ -80,6 +81,7 @@ public class Player
         if (_board.IsLegalMove(newPosition))
         {
             Position = newPosition;
+            playerMoves++;
             DisplayManager.GetInstance().DisplayGameState(_board, this);
 
         }
