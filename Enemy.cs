@@ -19,6 +19,10 @@ public class Enemy : IEnemy
     }
     private string _name;
     private char _sign;
+
+    private int _health;
+    private int _attack;
+    private int _shield;
     public Enemy(string name, char sign='E')
     {
         _name = name;
