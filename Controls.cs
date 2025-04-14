@@ -142,6 +142,18 @@ public class DrinkElixirHandler : BaseControlHandler
         return base.Handle(key, player, board, ref running);
     }
 }
+public class FightHandler:BaseControlHandler
+{
+    public override bool Handle(ConsoleKey key, Player player, Board board, ref bool running)
+    {
+        if (key==ConsoleKey.F)
+        {
+            player.Fight();
+            return true;
+        }
+        return base.Handle(key, player, board, ref running);
+    }
+}
 
 public class MoveItemFromEqToHand: BaseControlHandler
 {
@@ -219,7 +231,6 @@ public class ExitHandler : BaseControlHandler
             running = false;
             return true;
         }
-
         return base.Handle(key, player, board, ref running);
     }
 }
@@ -246,6 +257,7 @@ public class InputHandlerChain
             .SetNext(new MoveItemFromEqToHand())
             .SetNext(new MoveItemFromHandToEq())
             .SetNext(new DrinkElixirHandler())
+            .SetNext(new FightHandler())
             .SetNext(new DisplayHelp())
             .SetNext(new ExitHandler())
             .SetNext(new InvalidInputHandler());

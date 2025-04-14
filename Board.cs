@@ -37,6 +37,7 @@ public class Tile
             k++;
         }
     }
+    public IEnemy? GetEnemy() => _enemy;
     public bool AddEnemy(IEnemy enemy)
     {
         if (_enemy == null)
@@ -126,7 +127,14 @@ public class Board
 
 
     }
-
+    public bool IsEnemy(Point position)
+    {
+        return GetEnemy(position) != null;
+    }
+    public IEnemy? GetEnemy(Point position)
+    {
+        return _tiles[position.X, position.Y].GetEnemy();
+    }
     public int ItemCount(Point position)
     {
         return _tiles[position.X, position.Y].ItemCount;

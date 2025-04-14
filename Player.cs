@@ -27,7 +27,7 @@ public class Player : ISubject
 
     public void Notify()
     {
-        foreach (var observer in _observers.ToList()) 
+        foreach (var observer in _observers.ToList())
         {
             observer.Update(this);
         }
@@ -36,7 +36,7 @@ public class Player : ISubject
     public void NextTurn()
     {
         playerMoves++;
-        Notify(); 
+        Notify();
     }
     public Point Position;
     private Board _board;
@@ -76,7 +76,7 @@ public class Player : ISubject
     public void ChangeCoin(int amount) => _coinNumber += amount;
 
     // end 
-    public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position,String name = "Hero 1", 
+    public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position, String name = "Hero 1",
         int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
     {
         Position = position;
@@ -101,6 +101,115 @@ public class Player : ISubject
         _wisdom += amount;
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>0-empty hands, -1-empty hand, 2-2handAttackImpossible  
+    /// 3-badHandChoose 4- bad attack type 1-success 5- no enemy to fight 6-no attack done</returns>
+    public int Fight()
+    {
+        if (!_board.IsEnemy(Position)) return 5;
+        if (IsLeftHandNull && IsRightHandNull) return 0;
+        DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left - BothHands): ");
+        IComponent? weaponToAttack = null;
+        IVisitor? attackVisitor = null;
+        switch (Console.ReadKey().Key)
+        {
+            case ConsoleKey.R:
+                {
+
+                    if (IsRightHandNull) return -1;
+                    DisplayManager.GetInstance().DisplayMessage("Select attack type: 1-CommonAttack 2-SecretAttack 3-MagicAttack");
+
+                    switch (Console.ReadKey().Key)
+                    {
+                        case ConsoleKey.D1:
+                            { 
+                                weaponToAttack = _rightHand as IComponent;
+                                attackVisitor = new CommonAttack(this, _board.GetEnemy(Position)!);
+                                if (weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    return 1;
+                                }
+                                return 6;
+                                break;
+                            }
+                        case ConsoleKey.D2:
+                            {
+                                break;
+                            }
+                        case ConsoleKey.D3:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                return 4;
+                            }
+                    }
+                    break;
+
+                }
+            case ConsoleKey.L:
+                {
+                    if(IsLeftHandNull) return -1;
+                    DisplayManager.GetInstance().DisplayMessage("Select attack type: 1-CommonAttack 2-SecretAttack 3-MagicAttack");
+
+                    switch (Console.ReadKey().Key)
+                    {
+                        case ConsoleKey.D1:
+                            {
+                                break;
+                            }
+                        case ConsoleKey.D2:
+                            {
+                                break;
+                            }
+                        case ConsoleKey.D3:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                return 4;
+                            }
+                    }
+                    break;
+                }
+            case ConsoleKey.B:
+                {
+                    if (IsLeftHandNull || IsRightHandNull) return 2;
+                    switch (Console.ReadKey().Key)
+                    {
+                        case ConsoleKey.D1:
+                            {
+                                break;
+                            }
+                        case ConsoleKey.D2:
+                            {
+                                break;
+                            }
+                        case ConsoleKey.D3:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                return 4;
+                            }
+                    }
+                    break;
+                }
+             default:
+                return 3;
+               
+
+
+        }
+
+        return 1;
+    }
     public void ChangeAggression(int aggression) { _aggression += aggression; }
     public void ChangeHealth(int health) { _health += health; }
     public void ChangeAgility(int agility) { _agility += agility; }
@@ -118,22 +227,22 @@ public class Player : ISubject
 
         }
     }
-       
+
     public bool MoveItemFromHandToEq()
     {
         DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left): ");
 
         ref Item? hand = ref _rightHand;
-        if(_rightHand ==  null && _leftHand == null) return false;
+        if (_rightHand == null && _leftHand == null) return false;
         switch (Console.ReadKey().Key)
         {
             case ConsoleKey.R:
                 hand = ref _rightHand;
-                
+
                 if (hand == null) return false;
                 if (hand.NeedsTwoArms)
                 {
-                    if(_equipment.Count>=_eqCapacity) return false; // eq limit cap
+                    if (_equipment.Count >= _eqCapacity) return false; // eq limit cap
                     ;
                     _equipment.Add(hand);
                     hand.RemoveModifiers(this);
@@ -168,24 +277,24 @@ public class Player : ISubject
     {
 
         DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left): ");
-        if(_equipment.Count == 0) return false;
+        if (_equipment.Count == 0) return false;
         ref Item? hand = ref _rightHand;
         bool bothHandsEmpty = true;
-        if(_leftHand != null || _rightHand != null) // jesli ktoras jest nie pusta to obie nie sa puste
+        if (_leftHand != null || _rightHand != null) // jesli ktoras jest nie pusta to obie nie sa puste
             bothHandsEmpty = false;
 
         switch (Console.ReadKey().Key)
         {
             case ConsoleKey.R:
                 hand = ref _rightHand;
-                if(hand != null) return false;
+                if (hand != null) return false;
                 break;
             case ConsoleKey.L:
                 hand = ref _leftHand;
                 if (hand != null) return false;
                 break;
             default:
-                return false; 
+                return false;
         }
         int count = _equipment.Count;
         DisplayManager.GetInstance().DisplayMessage("Select item to take:");
@@ -196,10 +305,10 @@ public class Player : ISubject
                 if (count < 1) return false;
                 if (_equipment[0].NeedsTwoArms)
                 {
-                    if(!bothHandsEmpty) return false;
+                    if (!bothHandsEmpty) return false;
                     _leftHand = _equipment[0];
                     _rightHand = _equipment[0];
-                     _equipment.RemoveAt(0);
+                    _equipment.RemoveAt(0);
                     return true;
                 }
                 hand = _equipment[0];
@@ -354,7 +463,7 @@ public class Player : ISubject
     }
     public int DrinkElixir()
     {
-        if(_leftHand == null && _rightHand == null)
+        if (_leftHand == null && _rightHand == null)
         {
             return -1;
         }
@@ -375,12 +484,12 @@ public class Player : ISubject
                 default:
                     return -1;
             }
-            if(hand.IsUsed) return 0;
+            if (hand.IsUsed) return 0;
             if (hand.ApplyOnEquip() == false)
             {
                 hand.ApplyModifiers(this);
                 NextTurn();
-                
+
                 return 1;
             }
             return -1;
@@ -391,7 +500,7 @@ public class Player : ISubject
     {
         int count = _equipment.Count();
 
-        if (count>0)
+        if (count > 0)
         {
             if (count == 1)
             {
@@ -457,16 +566,16 @@ public class Player : ISubject
         }
         return false;
 
-        
+
     }
     public bool PickItem()
     {
         if (_board.IsItem(Position))
         {
-            
+
             if (_equipment.Count >= _eqCapacity) return false; // limit eq capacity
             int count = _board.ItemCount(Position);
-            if (count== 1)
+            if (count == 1)
             {
                 _board.Remove(Position).OnPickUp(this);
                 return true;

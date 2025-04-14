@@ -10,8 +10,13 @@ public interface IEnemy
 {
     string GetName();
     char GetSign();
+    double Attack();
+    double Shield();
+    double Health();
+    void ChangeHelath(double h);
+    bool IsEnemyDead();
 }
-public class Enemy : IEnemy
+public abstract class Enemy : IEnemy
 {
     public virtual ConsoleColor GetColor()
     {
@@ -20,13 +25,20 @@ public class Enemy : IEnemy
     private string _name;
     private char _sign;
 
-    private int _health;
-    private int _attack;
-    private int _shield;
-    public Enemy(string name, char sign='E')
+    private double _health;
+    private double _attack;
+    private double _shield;
+    
+
+    
+   
+    public Enemy(string name, double attack,double health=20, double shield=5,char sign='E')
     {
         _name = name;
         _sign = sign;
+        _attack = attack;
+        _shield = shield;
+        _health = health;
     }
 
     public string GetName()
@@ -38,16 +50,43 @@ public class Enemy : IEnemy
     {
        return _sign;
     }
+
+    double IEnemy.Attack()
+    {
+        return _attack;
+    }
+
+    double IEnemy.Shield()
+    {
+        return _shield;
+    }
+
+    double IEnemy.Health()
+    {
+        return _health;
+    }
+
+    public void ChangeHelath(double h)
+    {
+        _health += h;
+        if(_health < 0) 
+            _health = 0;
+    }
+    public bool IsEnemyDead()
+    {
+        return _health == 0;
+    }
 }
 public class Goblin : Enemy
 {
-    public Goblin(string name = "Goblin", char sign = 'G') : base(name, sign)
+    public Goblin(string name = "Goblin", double attack = 10,char sign = 'G') : base(name, sign)
     {
+        
     }
 }
 public class Ork : Enemy
 {
-    public Ork(string name = "Ork", char sign = 'O') : base(name, sign)
+    public Ork(string name = "Ork", double attack = 15,char sign = 'O') : base(name, sign)
     {
     }
 }
