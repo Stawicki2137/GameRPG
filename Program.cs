@@ -19,7 +19,8 @@ internal class Program
         var inputChain = new InputHandlerChain();
         while(running)
         {
-
+            if (player.IsPlayerDead)
+                break;
             Console.SetCursorPosition(0, 22);
             ConsoleKey key = Console.ReadKey().Key;
             inputChain.HandleInput(key, player, board, ref running);

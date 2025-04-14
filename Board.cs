@@ -80,6 +80,7 @@ public class Tile
         { return _symbol; }
     }
     public int ItemCount => _items.Count;
+    public void RemoveEnemy() { _enemy = null; }
 
     public bool IsItem()
     {
@@ -130,6 +131,10 @@ public class Board
     public bool IsEnemy(Point position)
     {
         return GetEnemy(position) != null;
+    }
+    public void RemoveEnemy(Point position)
+    {
+        _tiles[position.X, position.Y].RemoveEnemy();
     }
     public IEnemy? GetEnemy(Point position)
     {

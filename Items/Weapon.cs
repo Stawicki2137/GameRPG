@@ -55,18 +55,21 @@ public class CommonAttack : IVisitor
     private double _playerDefence = 0;
     public void VisitHeavyWeapon(HeavyWeapon weapon)
     {
-        _playerAttack += _player.GetAggression + _player.GetPower;
-        _playerDefence += _player.GetPower + _player.GetLuck;
-        double damagePlayerGet = Math.Min(_enemy.Attack() - _playerDefence,0);
-        double damageEnemyGet = Math.Min(_playerAttack - _enemy.Shield(),0);
-
-        double changeEnemyHealth = _enemy.Health() - damageEnemyGet;
-
-        _enemy.ChangeHelath(-changeEnemyHealth);
+        _playerAttack += (_player.GetAggression + _player.GetPower);
+        _playerDefence += (_player.GetPower + _player.GetLuck);
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence,0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(),0);
+        _enemy.ChangeHelath(-damageEnemyGet);
         if (_enemy.IsEnemyDead())
         {
-            DisplayManager.GetInstance().DisplayMessage("Enemy killed!");
+            return;
+            
         }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        } 
          
     }
 
@@ -74,12 +77,38 @@ public class CommonAttack : IVisitor
     {
         _playerAttack += _player.GetAgility + _player.GetLuck;
         _playerDefence += _player.GetAgility + _player.GetLuck;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 
     public void VisitMagicWeapon(MagicWeapon weapon)
     {
         _playerAttack += _player.GetWisdom;
         _playerDefence += _player.GetAgility + _player.GetLuck;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
 
     }
 
@@ -87,6 +116,19 @@ public class CommonAttack : IVisitor
     {
         _playerAttack += 0;
         _playerDefence += _player.GetAgility;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 }
 
@@ -192,7 +234,7 @@ public abstract class Sword : Weapon
 }
 public class Dagger : Weapon, IComponent
 {
-    private readonly IComponent _category = new LightWeapon();
+    private readonly IComponent _category = new MagicWeapon();
     public Dagger() : base("Dagger", false)
     {
         signifying = 'D';
@@ -206,7 +248,7 @@ public class Dagger : Weapon, IComponent
 }
 public class LightSword : Sword, IComponent
 {
-    private readonly IComponent _category = new MagicWeapon();
+    private readonly IComponent _category = new LightWeapon();
 
     public LightSword() : base("Light Sword")
     {

@@ -77,7 +77,7 @@ public class Player : ISubject
 
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position, String name = "Hero 1",
-        int power = 3, int agility = 3, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
+        int power = 3, int agility = 6, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
     {
         Position = position;
         _board = board;
@@ -101,11 +101,13 @@ public class Player : ISubject
         _wisdom += amount;
 
     }
+    
     /// <summary>
     /// 
     /// </summary>
     /// <returns>0-empty hands, -1-empty hand, 2-2handAttackImpossible  
     /// 3-badHandChoose 4- bad attack type 1-success 5- no enemy to fight 6-no attack done</returns>
+    /// 
     public int Fight()
     {
         if (!_board.IsEnemy(Position)) return 5;
@@ -127,9 +129,21 @@ public class Player : ISubject
                             { 
                                 weaponToAttack = _rightHand as IComponent;
                                 attackVisitor = new CommonAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("U have just attacked an enemy");
+
                                 if (weaponToAttack != null)
                                 {
                                     weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        DisplayManager.GetInstance().DisplayMessage("Enemy is dead");
+                                        _board.RemoveEnemy(Position);
+                                    }
+                                    else
+                                    {
+                                        DisplayManager.GetInstance().DisplayMessage("You are killed! GAME OVER");
+
+                                    }
                                     return 1;
                                 }
                                 return 6;
@@ -216,6 +230,7 @@ public class Player : ISubject
     public void ChangeLuck(int luck) { _luck += luck; }
     public void ChangeWisdom(int wisdom) { _wisdom += wisdom; }
     public void ChangePower(int power) { _power += power; }
+    public bool IsPlayerDead => _health <= 0;
     public void Move(int x, int y)
     {
         Point newPosition = new Point(Position.X + x, Position.Y + y);

@@ -32,7 +32,7 @@ public abstract class Enemy : IEnemy
 
     
    
-    public Enemy(string name, double attack,double health=20, double shield=5,char sign='E')
+    public Enemy(string name, double attack,double health=10, double shield=5,char sign='E')
     {
         _name = name;
         _sign = sign;
@@ -74,19 +74,19 @@ public abstract class Enemy : IEnemy
     }
     public bool IsEnemyDead()
     {
-        return _health == 0;
+        return _health== 0;
     }
 }
 public class Goblin : Enemy
 {
-    public Goblin(string name = "Goblin", double attack = 10,char sign = 'G') : base(name, sign)
+    public Goblin(string name = "Goblin", double attack = 8,char sign = 'G') : base(name, sign)
     {
         
     }
 }
 public class Ork : Enemy
 {
-    public Ork(string name = "Ork", double attack = 15,char sign = 'O') : base(name, sign)
+    public Ork(string name = "Ork", double attack = 12,char sign = 'O') : base(name, sign)
     {
     }
 }
