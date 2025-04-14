@@ -129,6 +129,7 @@ public class CommonAttack : IVisitor
             _player.ChangeHealth(-(int)damagePlayerGet);
 
         }
+        
     }
 }
 
@@ -143,24 +144,76 @@ public class SecretAttack : IVisitor
     {
         _playerAttack += (double)(_player.GetAggression + _player.GetPower)*0.5;
         _playerDefence += _player.GetPower;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 
     public void VisitLightWeapon(LightWeapon weapon)
     {
         _playerAttack += (_player.GetAgility + _player.GetLuck)*2;
         _playerDefence += _player.GetAgility;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 
     public void VisitMagicWeapon(MagicWeapon weapon)
     {
         _playerAttack += 1;
         _playerDefence += 0;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 
     public void VisitOtherItem(UselessItem uselessItem)
     {
         _playerAttack += 0;
         _playerDefence += 0;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 }
 
@@ -175,12 +228,38 @@ public class MagicAttack : IVisitor
     {
         _playerAttack += 1;
         _playerDefence += _player.GetLuck;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
     }
 
     public void VisitLightWeapon(LightWeapon weapon)
     {
         _playerAttack += 1;
         _playerDefence += _player.GetLuck;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
 
     }
 
@@ -188,6 +267,19 @@ public class MagicAttack : IVisitor
     {
         _playerAttack += _player.GetWisdom;
         _playerDefence += _player.GetWisdom*2;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
 
     }
 
@@ -195,6 +287,19 @@ public class MagicAttack : IVisitor
     {
         _playerAttack += 0;
         _playerDefence += _player.GetLuck;
+        double damagePlayerGet = Math.Max(_enemy.Attack() - _playerDefence, 0);
+        double damageEnemyGet = Math.Max(_playerAttack - _enemy.Shield(), 0);
+        _enemy.ChangeHelath(-damageEnemyGet);
+        if (_enemy.IsEnemyDead())
+        {
+            return;
+
+        }
+        else
+        {
+            _player.ChangeHealth(-(int)damagePlayerGet);
+
+        }
 
     }
 }
@@ -263,7 +368,7 @@ public class LightSword : Sword, IComponent
 public class TwoHandedHeavySword : Sword, IComponent
 {
     private readonly IComponent _category = new HeavyWeapon();
-    public TwoHandedHeavySword() : base("Two Handed Heavy Sword", true)
+    public TwoHandedHeavySword() : base("Two Handed Heavy Sword",true)
     {
         Damage += 10;
         signifying = 'H';

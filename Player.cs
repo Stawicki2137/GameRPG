@@ -55,14 +55,14 @@ public class Player : ISubject
     private string _name;
     private int _power;
     private int _agility;
-    private int _health;
+    private double _health;
     private int _luck;
     private int _aggression;
     private int _wisdom;
     private int _eqCapacity;
     public int GetWisdom => _wisdom;
     public int GetAggression => _aggression;
-    public int GetHealth => _health;
+    public double GetHealth => _health;
     public int GetLuck => _luck;
     public int GetAgility => _agility;
     public int GetPower => _power;
@@ -77,7 +77,7 @@ public class Player : ISubject
 
     // end 
     public Player(Board board/*gracz musi byc przypisany do planszy*/, Point position, String name = "Hero 1",
-        int power = 3, int agility = 6, int health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
+        int power = 3, int agility = 6, double health = 10, int luck = 5, int wisdom = 3, int aggression = 3, int eqCapacity = 9)
     {
         Position = position;
         _board = board;
@@ -95,7 +95,7 @@ public class Player : ISubject
     {
         _power += amount;
         _agility += amount;
-        _health += amount;
+        _health += (double)amount;
         _luck += amount;
         _aggression += amount;
         _wisdom += amount;
@@ -225,7 +225,7 @@ public class Player : ISubject
         return 1;
     }
     public void ChangeAggression(int aggression) { _aggression += aggression; }
-    public void ChangeHealth(int health) { _health += health; }
+    public void ChangeHealth(double health) { _health += health; }
     public void ChangeAgility(int agility) { _agility += agility; }
     public void ChangeLuck(int luck) { _luck += luck; }
     public void ChangeWisdom(int wisdom) { _wisdom += wisdom; }
@@ -324,6 +324,10 @@ public class Player : ISubject
                     _leftHand = _equipment[0];
                     _rightHand = _equipment[0];
                     _equipment.RemoveAt(0);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[0];
@@ -341,6 +345,10 @@ public class Player : ISubject
                     _leftHand = _equipment[1];
                     _rightHand = _equipment[1];
                     _equipment.RemoveAt(1);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[1];
@@ -358,6 +366,10 @@ public class Player : ISubject
                     _leftHand = _equipment[2];
                     _rightHand = _equipment[2];
                     _equipment.RemoveAt(2);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[2];
@@ -375,6 +387,10 @@ public class Player : ISubject
                     _leftHand = _equipment[3];
                     _rightHand = _equipment[3];
                     _equipment.RemoveAt(3);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[3];
@@ -392,6 +408,10 @@ public class Player : ISubject
                     _leftHand = _equipment[4];
                     _rightHand = _equipment[4];
                     _equipment.RemoveAt(4);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[4];
@@ -409,6 +429,10 @@ public class Player : ISubject
                     _leftHand = _equipment[5];
                     _rightHand = _equipment[5];
                     _equipment.RemoveAt(5);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[5];
@@ -426,6 +450,10 @@ public class Player : ISubject
                     _leftHand = _equipment[6];
                     _rightHand = _equipment[6];
                     _equipment.RemoveAt(6);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[6];
@@ -443,6 +471,10 @@ public class Player : ISubject
                     _leftHand = _equipment[7];
                     _rightHand = _equipment[7];
                     _equipment.RemoveAt(7);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[7];
@@ -460,6 +492,10 @@ public class Player : ISubject
                     _leftHand = _equipment[8];
                     _rightHand = _equipment[8];
                     _equipment.RemoveAt(8);
+                    if (hand.ApplyOnEquip())
+                    {
+                        hand.ApplyModifiers(this);
+                    }
                     return true;
                 }
                 hand = _equipment[8];

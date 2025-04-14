@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace GameRPG;
 
-public abstract class UselessItem : Item
+public abstract class UselessItem : Item, IComponent
 {
     protected UselessItem(string name, bool needsTwoArms = false) : base(name, needsTwoArms) { signifying = 'U'; }
+
+    public void Accept(IVisitor visitor)
+    {
+        visitor.VisitOtherItem(this);
+    }
 }
 public class HollowShield : UselessItem
 {
