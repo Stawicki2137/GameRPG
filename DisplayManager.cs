@@ -72,7 +72,7 @@ public sealed class DisplayManager
     {
         Console.OutputEncoding = Encoding.UTF8;
         Console.SetCursorPosition(0, 22);
-        Console.Write(new String(' ', 45));
+        Console.Write(new String(' ', 85));
         Console.SetCursorPosition(0, 22);
         Console.Write(message);
     }

@@ -128,6 +128,11 @@ public class Board
 
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns>True if there is no enemy else false</returns>
     public bool IsEnemy(Point position)
     {
         return GetEnemy(position) != null;

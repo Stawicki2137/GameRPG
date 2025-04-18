@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameRPG;
-// TODO OnItem i wtedy dla waluty zrobic ze sie inkrementuje kiermana xd a dla reszty normalnie leci do eq 
 public interface IItem
 {
     void OnPickUp(Player player);
@@ -16,7 +15,7 @@ public interface IItem
     bool ApplyOnEquip();
     ConsoleColor GetColor();
 }
-public abstract class Item : IItem
+public abstract class Item : IItem, IComponent
 {
     public char signifying { get; protected set; } = 'I';
     protected bool _applayOnEquip = true;
@@ -52,5 +51,10 @@ public abstract class Item : IItem
     public ConsoleColor GetColor()
     {
        return ConsoleColor.White;
+    }
+
+    public virtual void Accept(IVisitor visitor)
+    {
+        visitor.VisitOtherItem(this);
     }
 }

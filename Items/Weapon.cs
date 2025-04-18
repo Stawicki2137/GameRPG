@@ -37,15 +37,9 @@ public interface IVisitor
     void VisitHeavyWeapon(HeavyWeapon weapon);
     void VisitLightWeapon(LightWeapon weapon);
     void VisitMagicWeapon(MagicWeapon weapon);
-    void VisitOtherItem(UselessItem uselessItem);
+    void VisitOtherItem(Item uselessItem);
 }
-// a jakby dodac cos w stylu OnPickUp w Items i po prostu tam dac flage czy nadaje sie do walki przedmiot czy nie
-// i wredy wiem czy przemdiot w rece nadaje sie do walki i jak sie nadaje to przekazuje go 
-// a co z logik walki? bo przyjmuje playera i visitora ale moze byc tak ze uzyje obu rak to wsm moge zrobic ze 
-// atakuje najpierw jedna pozniej druga tak jakby ? tak by bylo najlatwiej zrobic ale taka funkcjonalnosc
-// zeby zadac na raz obrazenia z roznych atakow z roznych rak na raz i poczekac na jedna odpowiedz enemy 
-// po tym podwojnym (z dwoch rak na raz ataku) ale jak to zrobic?? moze po prostu bym zrobil tak zebym 
-// nie wiem jak xd
+
 public class CommonAttack : IVisitor
 {
     private Player _player;
@@ -112,7 +106,7 @@ public class CommonAttack : IVisitor
 
     }
 
-    public void VisitOtherItem(UselessItem uselessItem)
+    public void VisitOtherItem(Item uselessItem)
     {
         _playerAttack += 0;
         _playerDefence += _player.GetAgility;
@@ -197,7 +191,7 @@ public class SecretAttack : IVisitor
         }
     }
 
-    public void VisitOtherItem(UselessItem uselessItem)
+    public void VisitOtherItem(Item uselessItem)
     {
         _playerAttack += 0;
         _playerDefence += 0;
@@ -283,7 +277,7 @@ public class MagicAttack : IVisitor
 
     }
 
-    public void VisitOtherItem(UselessItem uselessItem)
+    public void VisitOtherItem(Item uselessItem)
     {
         _playerAttack += 0;
         _playerDefence += _player.GetLuck;

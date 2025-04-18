@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -148,7 +149,69 @@ public class FightHandler:BaseControlHandler
     {
         if (key==ConsoleKey.F)
         {
-            player.Fight();
+            string communicate = "debug- FIghtHandler-Handle";
+            int ans;
+            switch(ans=player.Fight())
+            {
+                case 10:
+                    {
+                        communicate = "Enemy is dead!";
+                        break;
+                    }
+                case 11:
+                    {
+                        communicate = "Player is dead";
+                        break;
+                    }
+                case -1:
+                    {
+                        communicate = "This hand is empty!";
+                        break;
+                    }
+                case 0:
+                    {
+                        communicate="Player has empty hands!";
+                        break;
+                    }
+                case 1:
+                    {
+                        communicate = "Fight has ended";
+                        break;
+                    }
+              
+                case 2:
+                    {
+                        communicate = "2hand attack is impossible right now";
+                        break;
+                    }
+                case 3:
+                    {
+                        communicate = "Probably you've chosen wrong hand";
+                        break;
+                    }
+                case 4:
+                    {
+                        communicate = "You have chosen wrong attack type";
+                        break;
+                    }
+                case 5:
+                    {
+                        communicate = "No enemy to fight";
+                        break;
+                    }
+                case 6:
+                    {
+                        communicate = "No attack was made";
+                        break;
+                    }
+                default:
+                    {
+                        ;
+                        communicate = "not predicted behaviour";
+                        break;
+                    }
+            }
+            DisplayManager.GetInstance().DisplayMessage(communicate);
             return true;
         }
         return base.Handle(key, player, board, ref running);

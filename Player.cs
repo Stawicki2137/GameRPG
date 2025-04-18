@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Numerics;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO Display fight informations 
 namespace GameRPG;
 public struct Point
 {
@@ -106,20 +109,21 @@ public class Player : ISubject
     /// 
     /// </summary>
     /// <returns>0-empty hands, -1-empty hand, 2-2handAttackImpossible  
-    /// 3-badHandChoose 4- bad attack type 1-success 5- no enemy to fight 6-no attack done</returns>
+    /// 3-badHandChoose 4- bad attack type 1-success 5- no enemy to fight 6-no attack done
+    /// 10 - enemy dead 11 - player dead </returns>
     /// 
     public int Fight()
     {
         if (!_board.IsEnemy(Position)) return 5;
         if (IsLeftHandNull && IsRightHandNull) return 0;
-        DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left - BothHands): ");
+        DisplayManager.GetInstance().DisplayMessage("Select hand (R - Right, L - Left - (dopisac) BothHands): ");
         IComponent? weaponToAttack = null;
         IVisitor? attackVisitor = null;
         switch (Console.ReadKey().Key)
         {
             case ConsoleKey.R:
                 {
-
+                    ///test R 1
                     if (IsRightHandNull) return -1;
                     DisplayManager.GetInstance().DisplayMessage("Select attack type: 1-CommonAttack 2-SecretAttack 3-MagicAttack");
 
@@ -136,33 +140,84 @@ public class Player : ISubject
                                     weaponToAttack.Accept(attackVisitor);
                                     if (_board.GetEnemy(Position).IsEnemyDead())
                                     {
-                                        DisplayManager.GetInstance().DisplayMessage("Enemy is dead");
                                         _board.RemoveEnemy(Position);
+                                        return 10;
+
                                     }
                                     else
                                     {
-                                        DisplayManager.GetInstance().DisplayMessage("You are killed! GAME OVER");
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
 
                                     }
                                     return 1;
                                 }
                                 return 6;
-                                break;
                             }
                         case ConsoleKey.D2:
                             {
-                                break;
+                                weaponToAttack = _rightHand as IComponent;
+                                attackVisitor = new SecretAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("You attacked an enemy!");
+                                if(weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        _board.RemoveEnemy(Position);
+                                        return 10;
+                                    }
+                                    else
+                                    {
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
+
+
+                                    }
+                                    return 1;
+
+                                }
+                                return 6;
                             }
                         case ConsoleKey.D3:
                             {
-                                break;
+
+                                weaponToAttack = _rightHand as IComponent;
+                                attackVisitor = new MagicAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("You attacked an enemy!");
+                                if (weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        _board.RemoveEnemy(Position);
+                                        return 10;
+
+                                    }
+                                    else
+                                    {
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
+
+
+                                    }
+
+                                    return 1;
+
+                                }
+                                return 6;
                             }
                         default:
                             {
                                 return 4;
                             }
                     }
-                    break;
 
                 }
             case ConsoleKey.L:
@@ -174,22 +229,97 @@ public class Player : ISubject
                     {
                         case ConsoleKey.D1:
                             {
-                                break;
+                                weaponToAttack = _leftHand as IComponent;
+                                attackVisitor = new CommonAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("U have just attacked an enemy");
+
+                                if (weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        _board.RemoveEnemy(Position);
+                                        return 10;
+
+                                    }
+                                    else
+                                    {
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
+
+
+                                    }
+                                    return 1;
+                                }
+                                return 6;
                             }
                         case ConsoleKey.D2:
                             {
-                                break;
+                                weaponToAttack = _leftHand as IComponent;
+                                attackVisitor = new SecretAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("You attacked an enemy!");
+                                if (weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        _board.RemoveEnemy(Position);
+                                        return 10;
+
+                                    }
+                                    else
+                                    {
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
+
+
+                                    }
+                                    return 1;
+
+                                }
+                                return 6;
+                                
                             }
                         case ConsoleKey.D3:
                             {
-                                break;
+
+                                weaponToAttack = _leftHand as IComponent;
+                                attackVisitor = new MagicAttack(this, _board.GetEnemy(Position)!);
+                                DisplayManager.GetInstance().DisplayMessage("You attacked an enemy!");
+                                if (weaponToAttack != null)
+                                {
+                                    weaponToAttack.Accept(attackVisitor);
+                                    if (_board.GetEnemy(Position).IsEnemyDead())
+                                    {
+                                        _board.RemoveEnemy(Position);
+                                        return 10;
+
+                                    }
+                                    else
+                                    {
+                                        if (IsPlayerDead)
+                                        {
+                                            return 11;
+                                        }
+
+
+                                    }
+                                    return 1;
+
+                                }
+                                return 6;
+                                
                             }
                         default:
                             {
                                 return 4;
                             }
                     }
-                    break;
+                   
                 }
             case ConsoleKey.B:
                 {
@@ -521,7 +651,7 @@ public class Player : ISubject
         else
         {
             ref Item? hand = ref _rightHand;
-            DisplayManager.GetInstance().DisplayMessage("Choose arm (R-right L-Left)");
+            DisplayManager.GetInstance().DisplayMessage("Choose arm: (R-right L-Left)");
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.R:
